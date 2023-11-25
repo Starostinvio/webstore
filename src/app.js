@@ -1,12 +1,13 @@
 import React from "react";
-import { createElement } from "./utils.js";
 import "./styles.css";
+import { addPlural } from "./utils/addPlural.js";
 
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
+
 function App({ store }) {
   const list = store.getState().list;
 
@@ -28,9 +29,9 @@ function App({ store }) {
               >
                 <div className="Item-code">{item.code}</div>
                 <div className="Item-title">
-                  {" "}
                   {item.counter !== 0
-                    ? item.title + ` | Выделяли ${item.counter} раз`
+                    ? item.title +
+                      ` | Выделяли ${addPlural(item.counter, "раз")}`
                     : item.title}
                 </div>
                 <div className="Item-actions">
