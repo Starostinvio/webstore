@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-.App-controls {
-=======
 .Controls {
->>>>>>> e76a78bcc0df616abef94f7e147e1b037be5aec9
   display: flex;
   justify-content: flex-end;
   padding: 20px;

@@ -1,39 +1,6 @@
-<<<<<<< HEAD
-.List-item {
-  border-bottom: 1px dashed #ccc;
-}
-
-.Item {
-  display: flex;
-  justify-content: flex-start;
-  transition: background-color 1s;
-}
-
-.Item_selected {
-  background: #75aaf1;
-  color: #fff;
-}
-
-.Item-code {
-  padding: 20px 10px 20px 20px;
-}
-
-.Item-title {
-  width: 100%;
-  padding: 20px 10px;
-}
-
-.Item-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px 20px 20px 10px;
-}
-=======
 .List {
-
 }
 
 .List-item {
   border-bottom: 1px dashed #ccc;
 }
->>>>>>> e76a78bcc0df616abef94f7e147e1b037be5aec9
