@@ -1,6 +1,10 @@
 import React from "react";
-import "./styles.css";
-import { addPlural } from "./utils/addPlural.js";
+import { useCallback } from "react";
+
+import List from "./components/list/index.js";
+import Controls from "./components/controls/index.js";
+import Head from "./components/head/index.js";
+import PageLayout from "./components/page-layout/index.js";
 
 /**
  * Приложение
@@ -11,40 +15,60 @@ import { addPlural } from "./utils/addPlural.js";
 function App({ store }) {
   const list = store.getState().list;
 
+  const onDeleteItem = useCallback(
+    (code) => {
+      store.deleteItem(code);
+    },
+    [store]
+  );
+
+  const onSelectItem = useCallback(
+    (code) => {
+      store.selectItem(code);
+    },
+    [store]
+  );
+
+  const onAddItem = useCallback(() => {
+    store.addItem();
+  }, [store]);
+  // const handlerRemove = (item, e) => {
+  //   e.stopPropagation();
+  //   store.deleteItem(item);
+  // };
+
   return (
-    <div className="App">
-      <div className="App-head">
-        <h1>Приложение на чистом JS</h1>
-      </div>
-      <div className="App-controls">
-        <button onClick={() => store.addItem()}>Добавить</button>
-      </div>
-      <div className="App-center">
-        <div className="List">
-          {list.map((item) => (
-            <div key={item.code} className="List-item">
-              <div
-                className={"Item" + (item.selected ? " Item_selected" : "")}
-                onClick={() => store.selectItem(item.code)}
-              >
-                <div className="Item-code">{item.code}</div>
-                <div className="Item-title">
-                  {item.counter !== 0
-                    ? item.title +
-                      ` | Выделяли ${addPlural(item.counter, "раз")}`
-                    : item.title}
-                </div>
-                <div className="Item-actions">
-                  <button onClick={() => store.deleteItem(item.code)}>
-                    Удалить
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    // <div className="App">
+    //   <div className="App-head">
+    //     <Head title="Приложение на чистом JS" />
+    //   </div>
+    //   <div className="App-controls">
+    //     <Controls store={store} />
+    //   </div>
+    //   <div className="App-center">
+    //     <List store={store} />
+    //   </div>
+    // </div>
+    // <PageLayout
+    //   // head={<Head title={"Приложение на чистом JS"} />}
+    //   // controls={<Controls store={store} />}
+    //   // content={<List store={store} />}
+    //   content={
+    //     <>
+
+    //     </>
+    //   }
+    // />
+    <PageLayout>
+      <Head title={"Приложение на чистом JS"} />
+      {/* <Controls store={store} /> */}
+      <Controls onAdd={onAddItem} />
+      <List
+        list={list}
+        onDeleteItem={onDeleteItem}
+        onSelectItem={onSelectItem}
+      />
+    </PageLayout>
   );
 }
 

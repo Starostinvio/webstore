@@ -25,6 +25,7 @@ class Store {
    */
   subscribe(listener) {
     this.listeners.push(listener);
+
     // Возвращается функция для удаления добавленного слушателя
     return () => {
       this.listeners = this.listeners.filter((item) => item !== listener);
@@ -45,6 +46,7 @@ class Store {
    */
   setState(newState) {
     this.state = newState;
+
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
   }
@@ -83,10 +85,16 @@ class Store {
       ...this.state,
       list: this.state.list.map((item) => {
         if (item.code === code) {
-          item.selected = !item.selected;
-          item.selected && (item.counter += 1);
+          // item.selected = !item.selected;
+          return {
+            ...item,
+            selected: !item.selected,
+            count: item.selected ? item.count : item.count + 1 || 1,
+          };
+          // item.selected && (item.counter += 1);
         } else {
-          item.selected = false;
+          // item.selected = false;
+          return item.selected ? { ...item, selected: false } : item;
         }
         return item;
       }),
