@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .List-item {
   border-bottom: 1px dashed #ccc;
 }
@@ -27,3 +28,12 @@
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
 }
+=======
+.List {
+
+}
+
+.List-item {
+  border-bottom: 1px dashed #ccc;
+}
+>>>>>>> e76a78bcc0df616abef94f7e147e1b037be5aec9
