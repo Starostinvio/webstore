@@ -1,6 +1,7 @@
 .Item {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   font-size: 18px;
   transition: background-color 1s;
 }

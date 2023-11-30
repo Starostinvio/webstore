@@ -16,7 +16,7 @@ function List({ list, useBasket, showBasketProducts }) {
   }
 
   return (
-    <div className="List">
+    <div className={showBasketProducts ? "List-basket" : "List"}>
       {list.map((item) => (
         <div key={item.code} className="List-item">
           <Item
