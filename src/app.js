@@ -4,6 +4,7 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import useBasket from "./hooks/useBasket";
 
 /**
  * Приложение
@@ -12,35 +13,21 @@ import PageLayout from "./components/page-layout";
  */
 function App({ store }) {
   const list = store.getState().list;
-
-  const callbacks = {
-    onDeleteItem: useCallback(
-      (code) => {
-        store.deleteItem(code);
-      },
-      [store]
-    ),
-
-    onSelectItem: useCallback(
-      (code) => {
-        store.selectItem(code);
-      },
-      [store]
-    ),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store]),
-  };
+  const { showBasket, setShowBasket, basket, setBasket, totalPrice } =
+    useBasket();
 
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Controls onAdd={callbacks.onAddItem} />
+      <Head title="Магазин" useBasket={{ setShowBasket }} />
+      <Controls
+        list={list}
+        useBasket={{ showBasket, setShowBasket, basket, setBasket, totalPrice }}
+      />
+
       <List
         list={list}
-        onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
+        useBasket={{ showBasket, setShowBasket, basket, setBasket, totalPrice }}
+        showBasketProducts={0}
       />
     </PageLayout>
   );

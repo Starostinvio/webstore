@@ -1,16 +1,41 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Item from "../item";
 import "./style.css";
 
-function List({ list, onDeleteItem, onSelectItem }) {
+function List({ list, useBasket, showBasketProducts }) {
+  const { showBasket, setShowBasket, basket, setBasket, totalPrice } =
+    useBasket;
+
+  if (showBasketProducts) {
+    list = list.filter((item) => {
+      return basket.find((basketProduct) => item.code === basketProduct.code);
+    });
+    console.log("newList", list);
+  }
+
   return (
     <div className="List">
       {list.map((item) => (
         <div key={item.code} className="List-item">
-          <Item item={item} onDelete={onDeleteItem} onSelect={onSelectItem} />
+          <Item
+            item={item}
+            useBasket={{ basket, setBasket }}
+            showBasketProducts={showBasketProducts}
+          />
         </div>
       ))}
+      {showBasketProducts ? (
+        <div className="List-total price">
+          <div className="price-title">Итого</div>
+          <div className="price-total">
+            {totalPrice(basket, list) + "\u20BD"}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
@@ -21,13 +46,8 @@ List.propTypes = {
       code: PropTypes.number,
     })
   ).isRequired,
-  onDeleteItem: PropTypes.func,
-  onSelectItem: PropTypes.func,
-};
 
-List.defaultProps = {
-  onDeleteItem: () => {},
-  onSelectItem: () => {},
+  useBasket: PropTypes.node,
 };
 
 export default React.memo(List);

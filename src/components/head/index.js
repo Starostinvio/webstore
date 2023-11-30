@@ -2,10 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./style.css";
 
-function Head({ title }) {
+function Head({ title, useBasket }) {
+  const { setShowBasket } = useBasket;
   return (
     <div className="Head">
       <h1>{title}</h1>
+      {title === "Корзина" ? (
+        <div className="Head__button-box">
+          <button onClick={() => setShowBasket((state) => !state)}>
+            Закрыть
+          </button>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
