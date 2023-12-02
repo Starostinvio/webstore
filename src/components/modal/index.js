@@ -1,4 +1,6 @@
 import React from "react";
+
+import PropTypes from "prop-types";
 import "./style.css";
 
 function Modal({ children }) {
@@ -9,4 +11,8 @@ function Modal({ children }) {
   );
 }
 
-export default Modal;
+Modal.propTypes = {
+  children: PropTypes.node,
+};
+
+export default React.memo(Modal);

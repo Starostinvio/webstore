@@ -4,6 +4,7 @@ import "./style.css";
 
 function Head({ title, useBasket }) {
   const { setShowBasket } = useBasket;
+
   return (
     <div className="Head">
       <h1>{title}</h1>

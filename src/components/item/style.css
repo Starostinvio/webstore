@@ -7,6 +7,7 @@
 }
 button {
   font-size: 13px !important;
+  cursor: pointer;
 }
 .Item_selected {
   background: #75aaf1;
@@ -29,34 +30,28 @@ button {
   white-space: nowrap;
 }
 
-.Item-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px 20px 20px 20px;
-}
-
 .Item-actions-basket {
   display: flex;
-}
-.Item-number {
-  white-space: nowrap;
-  margin-left: 62px;
-
-  display: flex;
-  align-items: center;
-}
-.Item-delete-box {
-  display: flex;
-  align-items: center;
-  margin-left: 24px;
-
-  font-family: Arial;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 15px;
 }
 
 .Item-control {
   padding-left: 7px;
   padding-right: 7px;
+}
+
+.Item-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 24px;
+}
+
+.Item-counter-off {
+  display: none;
+}
+.Item-counter {
+  white-space: nowrap;
+  margin-left: 62px;
+
+  display: flex;
+  align-items: center;
 }

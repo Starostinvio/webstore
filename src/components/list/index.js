@@ -4,33 +4,36 @@ import PropTypes from "prop-types";
 import Item from "../item";
 import "./style.css";
 
-function List({ list, useBasket, showBasketProducts }) {
-  const { showBasket, setShowBasket, basket, setBasket, totalPrice } =
-    useBasket;
-
-  if (showBasketProducts) {
-    list = list.filter((item) => {
-      return basket.find((basketProduct) => item.code === basketProduct.code);
-    });
-    console.log("newList", list);
-  }
+function List({
+  list,
+  useBasket,
+  showBasketProducts,
+  actionBasket,
+  actionBasketTitle,
+}) {
+  const { basket, totalPrice } = useBasket;
 
   return (
     <div className={showBasketProducts ? "List-basket" : "List"}>
-      {list.map((item) => (
-        <div key={item.code} className="List-item">
-          <Item
-            item={item}
-            useBasket={{ basket, setBasket }}
-            showBasketProducts={showBasketProducts}
-          />
-        </div>
-      ))}
+      <div className={showBasketProducts && "List-box"}>
+        {/* <div className="price-empty-basket">Корзина пуста</div> */}
+        {list.map((item) => (
+          <div key={item.code} className="List-item">
+            <Item
+              item={item}
+              useBasket={useBasket}
+              actionBasket={actionBasket}
+              showBasketProducts={showBasketProducts}
+              actionBasketTitle={actionBasketTitle}
+            />
+          </div>
+        ))}
+      </div>
       {showBasketProducts ? (
         <div className="List-total price">
           <div className="price-title">Итого</div>
           <div className="price-total">
-            {totalPrice(basket, list) + "\u20BD"}
+            {totalPrice(basket, list) + " \u20BD"}
           </div>
         </div>
       ) : (
@@ -47,7 +50,18 @@ List.propTypes = {
     })
   ).isRequired,
 
-  useBasket: PropTypes.node,
+  useBasket: PropTypes.shape({
+    basket: PropTypes.arrayOf(
+      PropTypes.shape({
+        code: PropTypes.number,
+        addCount: PropTypes.number,
+      })
+    ),
+    totalPrice: PropTypes.func,
+  }),
+  showBasketProducts: PropTypes.number,
+  actionBasketTitle: PropTypes.string,
+  actionBasket: PropTypes.func,
 };
 
 export default React.memo(List);

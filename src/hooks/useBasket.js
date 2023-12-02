@@ -5,7 +5,6 @@ export default function useBasket() {
   const [basket, setBasket] = useState([]);
 
   const totalPrice = (basket, products) => {
-    console.log("products list in Hook", products);
     let resultPrice = 0;
     for (let name of basket) {
       const currentProduct = products.find((item) => item.code === name.code);
@@ -15,5 +14,11 @@ export default function useBasket() {
     return resultPrice;
   };
 
-  return { showBasket, setShowBasket, basket, setBasket, totalPrice };
+  return {
+    showBasket,
+    setShowBasket,
+    basket,
+    setBasket,
+    totalPrice,
+  };
 }

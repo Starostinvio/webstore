@@ -11,18 +11,21 @@
 }
 
 .List-basket {
-  overflow-y: scroll;
-  max-height: 350px;
-}
-.List-basket::-webkit-scrollbar {
-  width: 5px;
+  /* max-height: 350px; */
+  height: 350px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+
+  padding: 71px 0px 68px 0px;
 }
 
-.List-basket::-webkit-scrollbar-thumb {
-  width: 4px;
-  max-height: 5px;
-  border-radius: 4px;
-  background: rgb(206, 206, 206);
+.List-box {
+  overflow-y: scroll;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+.List-box::-webkit-scrollbar {
+  width: 0px;
 }
 
 .List-item {
@@ -47,6 +50,17 @@
   width: 100%;
   padding: 20px 10px;
 }
+.price-empty-basket {
+  text-align: center;
+  padding: 20px;
+  margin: auto 0;
+
+  font-weight: 700;
+  font-family: Arial;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 21px;
+}
 
 .price-title {
   padding: 0px 10px;
@@ -59,12 +73,13 @@
 }
 
 .price-total {
+  padding: 0px 91px 0px 0px;
+  min-width: 94px;
+  text-align: right;
+
   font-weight: 700;
   font-family: Arial;
   font-size: 18px;
   font-weight: 700;
   line-height: 21px;
-
-  padding: 0px 91px 0px 0px;
-  margin-left: 62px;
 }
