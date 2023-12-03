@@ -11,20 +11,22 @@
 }
 
 .List-basket {
-  /* max-height: 350px; */
   height: 350px;
   box-sizing: border-box;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   padding: 71px 0px 68px 0px;
 }
 
-.List-box {
+.List-basket-box {
   overflow-y: scroll;
-  max-height: 100%;
   box-sizing: border-box;
+  max-height: 100%;
 }
-.List-box::-webkit-scrollbar {
+.List-basket-box::-webkit-scrollbar {
   width: 0px;
 }
 

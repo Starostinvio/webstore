@@ -15,8 +15,7 @@ function List({
 
   return (
     <div className={showBasketProducts ? "List-basket" : "List"}>
-      <div className={showBasketProducts && "List-box"}>
-        {/* <div className="price-empty-basket">Корзина пуста</div> */}
+      <div className={showBasketProducts && "List-basket-box"}>
         {list.map((item) => (
           <div key={item.code} className="List-item">
             <Item
@@ -29,6 +28,7 @@ function List({
           </div>
         ))}
       </div>
+
       {showBasketProducts ? (
         <div className="List-total price">
           <div className="price-title">Итого</div>
