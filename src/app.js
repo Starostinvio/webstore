@@ -4,7 +4,6 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
-import useBasket from "./hooks/useBasket";
 import Modal from "./components/modal";
 
 /**
@@ -13,86 +12,67 @@ import Modal from "./components/modal";
  * @returns {React.ReactElement}
  */
 function App({ store }) {
-  const { showBasket, setShowBasket, basket, setBasket, totalPrice } =
-    useBasket();
   const list = store.getState().list;
+  const basket = store.basket;
 
   const basketList = list.filter((item) => {
-    return basket.find((basketProduct) => item.code === basketProduct.code);
+    return store
+      .getBasket()
+      .find((basketProduct) => item.code === basketProduct.code);
   });
 
   const callbacks = {
     handlerAddToBasket: useCallback(
-      (CodeProduct) => {
-        if (
-          basket.length > 0 &&
-          basket.some((item) => item.code === CodeProduct)
-        ) {
-          setBasket((product) =>
-            product.map((item) => {
-              item.code === CodeProduct && item.addCount++;
-              return item;
-            })
-          );
-        } else {
-          setBasket((product) => [
-            ...product,
-            { code: CodeProduct, addCount: 1 },
-          ]);
-        }
+      (code) => {
+        return store.addToBasket(code);
       },
-      [basket]
+      [store]
     ),
-
     handlerRemoveFromBasket: useCallback(
-      (CodeProduct) => {
-        setBasket((products) =>
-          products.filter((item) => item.code !== CodeProduct)
-        );
+      (code) => {
+        return store.removeFromBasket(code);
       },
-      [basket]
+      [store]
     ),
+    toggleShowBasketModal: useCallback(() => {
+      return store.toggleShowBasketModal();
+    }, [store]),
+    totalPrice: useCallback(() => {
+      return store.totalPrice();
+    }, [store]),
   };
 
   return (
     <PageLayout>
-      <Head title="Магазин" useBasket={{ setShowBasket }} />
+      <Head title="Магазин" showBasketModal={callbacks.toggleShowBasketModal} />
       <Controls
         list={list}
-        useBasket={{
-          showBasket,
-          setShowBasket,
-          basket,
-          totalPrice,
-        }}
+        showBasketModal={callbacks.toggleShowBasketModal}
+        totalPrice={callbacks.totalPrice}
+        basket={basket}
       />
 
       <List
         list={list}
-        actionBasketTitle={"Добавить"}
+        actionBasketTitle="Добавить"
         actionBasket={callbacks.handlerAddToBasket}
-        useBasket={{
-          showBasket,
-          setShowBasket,
-          basket,
-          totalPrice,
-        }}
-        showBasketProducts={0}
+        basket={basket}
+        totalPrice={callbacks.totalPrice}
+        showBasketProducts={false}
       />
-      {showBasket && (
+      {store.getShowBasketModal() && (
         <Modal>
-          <Head title={"Корзина"} useBasket={{ setShowBasket }} />
+          <Head
+            title="Корзина"
+            showBasketModal={callbacks.toggleShowBasketModal}
+          />
           <List
             list={basketList}
-            actionBasketTitle={"Удалить"}
+            actionBasketTitle="Удалить"
             actionBasket={callbacks.handlerRemoveFromBasket}
-            useBasket={{
-              showBasket,
-              setShowBasket,
-              basket,
-              totalPrice,
-            }}
-            showBasketProducts={1}
+            basket={basket}
+            totalPrice={callbacks.totalPrice}
+            showBasketProducts={true}
           />
         </Modal>
       )}

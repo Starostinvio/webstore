@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
-import { plural } from "../../utils";
 import "./style.css";
 
 function Item(props) {
-  const { basket } = props.useBasket;
   const cn = bem("Item");
 
   return (
@@ -17,7 +15,8 @@ function Item(props) {
       <div
         className={props.showBasketProducts ? cn("counter") : cn("counter-off")}
       >
-        {basket.find((item) => item.code === props.item.code)?.addCount + " шт"}
+        {props.basket.find((item) => item.code === props.item.code)?.addCount +
+          " шт"}
       </div>
       <div className={cn("actions")}>
         <button
@@ -38,16 +37,15 @@ Item.propTypes = {
     selected: PropTypes.bool,
     count: PropTypes.number,
   }).isRequired,
-  useBasket: PropTypes.shape({
-    basket: PropTypes.arrayOf(
-      PropTypes.shape({
-        code: PropTypes.number,
-        addCount: PropTypes.number,
-      })
-    ),
-  }),
-  actionBasketTitle: PropTypes.string,
   actionBasket: PropTypes.func,
+  showBasketProducts: PropTypes.bool,
+  actionBasketTitle: PropTypes.string,
+  basket: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.number,
+      addCount: PropTypes.number,
+    })
+  ),
 };
 
 Item.defaultProps = {

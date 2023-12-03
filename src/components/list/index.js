@@ -1,29 +1,27 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Item from "../item";
 import "./style.css";
 
 function List({
   list,
-  useBasket,
   showBasketProducts,
   actionBasket,
   actionBasketTitle,
+  totalPrice,
+  basket,
 }) {
-  const { basket, totalPrice } = useBasket;
-
   return (
     <div className={showBasketProducts ? "List-basket" : "List"}>
-      <div className={showBasketProducts && "List-basket-box"}>
+      <div className={showBasketProducts ? "" : "List-basket-box"}>
         {list.map((item) => (
           <div key={item.code} className="List-item">
             <Item
               item={item}
-              useBasket={useBasket}
               actionBasket={actionBasket}
               showBasketProducts={showBasketProducts}
               actionBasketTitle={actionBasketTitle}
+              basket={basket}
             />
           </div>
         ))}
@@ -32,9 +30,7 @@ function List({
       {showBasketProducts ? (
         <div className="List-total price">
           <div className="price-title">Итого</div>
-          <div className="price-total">
-            {totalPrice(basket, list) + " \u20BD"}
-          </div>
+          <div className="price-total">{totalPrice(list) + " \u20BD"}</div>
         </div>
       ) : (
         ""
@@ -49,19 +45,16 @@ List.propTypes = {
       code: PropTypes.number,
     })
   ).isRequired,
-
-  useBasket: PropTypes.shape({
-    basket: PropTypes.arrayOf(
-      PropTypes.shape({
-        code: PropTypes.number,
-        addCount: PropTypes.number,
-      })
-    ),
-    totalPrice: PropTypes.func,
-  }),
-  showBasketProducts: PropTypes.number,
+  showBasketProducts: PropTypes.bool,
   actionBasketTitle: PropTypes.string,
+  totalPrice: PropTypes.func,
   actionBasket: PropTypes.func,
+  basket: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.number,
+      addCount: PropTypes.number,
+    })
+  ),
 };
 
 export default React.memo(List);

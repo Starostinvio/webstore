@@ -2,17 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./style.css";
 
-function Head({ title, useBasket }) {
-  const { setShowBasket } = useBasket;
-
+function Head({ title, showBasketModal }) {
   return (
     <div className="Head">
       <h1>{title}</h1>
       {title === "Корзина" ? (
         <div className="Head__button-box">
-          <button onClick={() => setShowBasket((state) => !state)}>
-            Закрыть
-          </button>
+          <button onClick={() => showBasketModal()}>Закрыть</button>
         </div>
       ) : (
         ""
@@ -22,7 +18,8 @@ function Head({ title, useBasket }) {
 }
 
 Head.propTypes = {
-  title: PropTypes.node,
+  title: PropTypes.string,
+  showBasketModal: PropTypes.func,
 };
 
 export default React.memo(Head);
