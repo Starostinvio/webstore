@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { formatNumber } from "../../utils";
 import { cn as bem } from "@bem-react/classname";
 import "./style.css";
 
@@ -10,7 +11,9 @@ function Item(props) {
     <div className={cn() + (props.item.selected ? " Item_selected" : "")}>
       <div className={cn("code")}>{props.item.code}</div>
       <div className={cn("title")}>{props.item.title}</div>
-      <div className={cn("price")}>{`${props.item.price} \u20BD`}</div>
+      <div className={cn("price")}>{`${formatNumber(
+        props.item.price
+      )} \u20BD`}</div>
 
       <div
         className={props.showBasketProducts ? cn("counter") : cn("counter-off")}

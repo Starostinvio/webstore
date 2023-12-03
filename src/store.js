@@ -1,4 +1,5 @@
 import { generateCode } from "./utils";
+import { formatNumber } from "./utils";
 
 /**
  * Хранилище состояния приложения
@@ -70,7 +71,7 @@ class Store {
       resultPrice += currentProduct.price * name.addCount;
     }
 
-    return resultPrice;
+    return formatNumber(resultPrice);
   }
 
   addToBasket(CodeProduct) {
