@@ -30,6 +30,16 @@
   width: 0px;
 }
 
+.List-empty-basket {
+  text-align: center;
+}
+.List-empty-basket p {
+  font-family: Arial;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
 .List-item {
   border-bottom: 1px dashed #ccc;
 }

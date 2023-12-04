@@ -14,6 +14,13 @@ function List({
   return (
     <div className={showBasketProducts ? "List-basket" : "List"}>
       <div className={showBasketProducts ? "List-basket-box" : ""}>
+        {!basket.length && showBasketProducts ? (
+          <div className="List-empty-basket">
+            <p>{"Корзина пуста :("}</p>
+          </div>
+        ) : (
+          ""
+        )}
         {list.map((item) => (
           <div key={item.code} className="List-item">
             <Item
