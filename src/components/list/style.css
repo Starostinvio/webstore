@@ -3,6 +3,9 @@
   font-weight: 400;
   line-height: 18px;
 }
+.List > :first-child {
+  border-top: 1px dashed #ccc;
+}
 
 .List-basket * {
   font-family: Arial;
@@ -10,8 +13,28 @@
   line-height: 18px;
 }
 
-.List-basket {
+/* .List-basket {
   height: 350px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 71px 0px 68px 0px;
+} */
+
+/* .List-basket-box {
+  overflow-y: auto;
+  box-sizing: border-box;
+  max-height: 100%;
+}
+.List-basket-box::-webkit-scrollbar {
+  width: 0px;
+  visibility: hidden;
+} */
+.List-basket {
+  /* height: 350px; */
   box-sizing: border-box;
   overflow-y: hidden;
   display: flex;
@@ -22,12 +45,19 @@
 }
 
 .List-basket-box {
-  overflow-y: scroll;
-  box-sizing: border-box;
-  max-height: 100%;
+  max-height: 235px;
+  min-height: 150px;
+  overflow: auto;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
 }
 .List-basket-box::-webkit-scrollbar {
   width: 0px;
+  visibility: hidden;
+}
+
+.List-basket-box > :first-child:not(.List-empty-basket) {
+  border-top: 1px dashed #ccc;
 }
 
 .List-empty-basket {

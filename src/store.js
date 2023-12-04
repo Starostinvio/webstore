@@ -80,10 +80,15 @@ class Store {
       this.basket.some((item) => item.code === CodeProduct)
     ) {
       this.setBasket(
-        this.basket.map((item) => {
-          item.code === CodeProduct && item.addCount++;
-          return item;
-        })
+        // this.basket.map((item) => {
+        //   item.code === CodeProduct && item.addCount++;
+        //   return item;
+        // })
+        this.basket.map((item) => ({
+          ...item,
+          addCount:
+            item.code === CodeProduct ? item.addCount + 1 : item.addCount,
+        }))
       );
     } else {
       this.setBasket([...this.basket, { code: CodeProduct, addCount: 1 }]);
