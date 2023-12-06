@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .List * {
   font-family: Arial;
   font-weight: 400;
@@ -68,12 +69,17 @@
   font-size: 30px;
   font-weight: 600;
   line-height: 21px;
+=======
+.List {
+
+>>>>>>> 1fa7f72c2e0cdd0700e3c37cf21c4041cc0feb68
 }
 
 .List-item {
   border-bottom: 1px dashed #ccc;
 }
 
+<<<<<<< HEAD
 .List-total {
 }
 
@@ -124,4 +130,8 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 21px;
+=======
+.List-item:first-child {
+  border-top: 1px dashed #ccc;
+>>>>>>> 1fa7f72c2e0cdd0700e3c37cf21c4041cc0feb68
 }

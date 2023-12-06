@@ -3,6 +3,7 @@
   justify-content: flex-end;
   padding: 20px;
 }
+<<<<<<< HEAD
 .Controls-result {
   display: flex;
   flex-wrap: nowrap;
@@ -24,3 +25,5 @@
   margin-left: 20px;
   width: 80px;
 }
+=======
+>>>>>>> 1fa7f72c2e0cdd0700e3c37cf21c4041cc0feb68
