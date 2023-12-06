@@ -19,7 +19,7 @@ function Controls({ list, showBasketModal, totalPrice, basket }) {
             few: "товара",
             many: "товаров",
           })} / 
-          ${totalPrice(list)} \u20BD `
+          ${totalPrice()} \u20BD `
             : "пусто"}
         </div>
       </div>

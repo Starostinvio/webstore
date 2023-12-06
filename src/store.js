@@ -6,6 +6,7 @@ import { formatNumber } from "./utils";
  */
 class Store {
   basket = [];
+  resultBasketPrice = 0;
   showBasketModal = false;
 
   constructor(initState = {}) {
@@ -73,6 +74,18 @@ class Store {
 
     return formatNumber(resultPrice);
   }
+  // totalPrice() {
+
+  //   for (let name of this.basket) {
+  //     const currentProduct = this.getState().list.find(
+  //       (item) => item.code === name.code
+  //     );
+
+  //     resultBasketPrice += currentProduct.price * name.addCount;
+  //   }
+
+  //   return formatNumber(resultPrice);
+  // }
 
   addToBasket(CodeProduct) {
     if (
