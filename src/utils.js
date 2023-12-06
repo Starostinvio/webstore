@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-export function plural(value, variants = {}, locale = "ru-RU") {
-  const key = new Intl.PluralRules(locale).select(value);
-
-  return variants[key] || "";
-}
-
-export const generateCode = (function (start = 0) {
-  return () => ++start;
-})();
-
-export function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-=======
 /**
  * Плюрализация
  * Возвращает вариант с учётом правил множественного числа под указанную локаль
@@ -21,13 +7,13 @@ export function formatNumber(number) {
  * @param [locale] {String} Локаль (код языка)
  * @returns {String}
  */
-export function plural(value, variants = {}, locale = 'ru-RU') {
+export function plural(value, variants = {}, locale = "ru-RU") {
   // Получаем фурму кодовой строкой: 'zero', 'one', 'two', 'few', 'many', 'other'
   // В русском языке 3 формы: 'one', 'few', 'many', и 'other' для дробных
   // В английском 2 формы: 'one', 'other'
   const key = new Intl.PluralRules(locale).select(value);
   // Возвращаем вариант по ключу, если он есть
-  return variants[key] || '';
+  return variants[key] || "";
 }
 
 /**
@@ -44,7 +30,6 @@ export function codeGenerator(start = 0) {
  * @param options {Object}
  * @returns {String}
  */
-export function numberFormat(value, locale = 'ru-RU', options = {}) {
+export function numberFormat(value, locale = "ru-RU", options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
->>>>>>> 1fa7f72c2e0cdd0700e3c37cf21c4041cc0feb68
 }

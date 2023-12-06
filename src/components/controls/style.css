@@ -3,27 +3,3 @@
   justify-content: flex-end;
   padding: 20px;
 }
-<<<<<<< HEAD
-.Controls-result {
-  display: flex;
-  flex-wrap: nowrap;
-
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 21px;
-}
-.Controls-total {
-  margin-left: 15px;
-
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 21px;
-}
-.Controls-open-modal {
-  margin-left: 20px;
-  width: 80px;
-}
-=======
->>>>>>> 1fa7f72c2e0cdd0700e3c37cf21c4041cc0feb68
