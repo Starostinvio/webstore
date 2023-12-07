@@ -1,9 +1,9 @@
 /* Пункт списка */
 .ItemBasket {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   transition: background-color 1s;
-  padding-left: 10px
+  padding-left: 10px;
 }
 
 .ItemBasket-code {
@@ -11,8 +11,23 @@
 }
 
 .ItemBasket-title {
-  width: 100%;
   padding: 20px 10px;
+
+  text-decoration: none;
+
+  color: black;
+
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  cursor: pointer;
+}
+.ItemBasket-title:hover {
+  text-decoration: underline;
 }
 
 .ItemBasket-right {
