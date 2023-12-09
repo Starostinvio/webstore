@@ -5,25 +5,25 @@ import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { Link } from "react-router-dom";
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum, amount, onOpen, pageWords }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
       <div className={cn("link-box")}>
-        <Link to="/">Главная</Link>
+        <Link to="/">{pageWords.MAIN}</Link>
       </div>
       <div>
-        <span className={cn("label")}>В корзине:</span>
+        <span className={cn("label")}>{pageWords.IN_BASKET}</span>
         <span className={cn("total")}>
           {amount
-            ? `${amount} ${plural(amount, {
-                one: "товар",
-                few: "товара",
-                many: "товаров",
-              })} / ${numberFormat(sum)} ₽`
-            : `пусто`}
+            ? `${amount} ${plural(
+                amount,
+                pageWords.PLURAL_PRODUCT,
+                pageWords.LANG
+              )} / ${numberFormat(sum)} ₽`
+            : pageWords.EMPTY}
         </span>
-        <button onClick={onOpen}>Перейти</button>
+        <button onClick={onOpen}>{pageWords.GO}</button>
       </div>
     </div>
   );
@@ -33,6 +33,7 @@ BasketTool.propTypes = {
   onOpen: PropTypes.func.isRequired,
   sum: PropTypes.number,
   amount: PropTypes.number,
+  pageWords: PropTypes.object,
 };
 
 BasketTool.defaultProps = {

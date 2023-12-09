@@ -13,6 +13,7 @@ function ProductDescription() {
   const location = useLocation();
 
   useEffect(() => {
+    if (select.list.length === 0) store.actions.catalog.load();
     store.actions.catalog.loadProduct(location.state);
   }, []);
 
@@ -34,6 +35,7 @@ function ProductDescription() {
     amount: state.basket.amount,
     sum: state.basket.sum,
     product: state.catalog.product,
+    PAGE_WORDS: state.pageLanguage.PAGE_WORDS,
   }));
 
   return (
@@ -43,6 +45,7 @@ function ProductDescription() {
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
+        pageWords={select.PAGE_WORDS}
       />
       <Description
         product={select.product}
@@ -52,4 +55,4 @@ function ProductDescription() {
   );
 }
 
-export default ProductDescription;
+export default memo(ProductDescription);

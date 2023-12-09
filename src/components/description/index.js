@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 function Description({ product, addToBasket }) {
   const cn = bem("Description");
+
   return (
     <div className={cn()}>
       <p>{product?.description}</p>
@@ -24,6 +25,10 @@ function Description({ product, addToBasket }) {
     </div>
   );
 }
-//Отправит _id в кнопке
+
+Description.PropTypes = {
+  product: PropTypes.object,
+  addToBasket: PropTypes.func,
+};
 
 export default memo(Description);

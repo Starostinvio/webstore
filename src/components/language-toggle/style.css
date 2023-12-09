@@ -1,0 +1,46 @@
+.LanguageToggle {
+  display: flex;
+  align-items: center;
+}
+
+.LanguageToggle h3 {
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+
+  margin-right: 5px;
+  cursor: default;
+}
+
+.LanguageToggle-platform {
+  width: 47px;
+  height: 26px;
+  background: rgb(225, 225, 225);
+  border-radius: 17px;
+  box-shadow: inset -1px 1px 1px rgb(194, 193, 196);
+
+  position: relative;
+}
+
+.LanguageToggle-item {
+  position: absolute;
+  top: 8%;
+  left: 7%;
+  width: 45%;
+  height: 82%;
+
+  background: rgb(254, 252, 255);
+  border-radius: 50%;
+  box-shadow: 0px 2px 1px 0px rgb(194, 193, 196);
+
+  transition: 0.2s;
+  transition-timing-function: ease;
+
+  cursor: pointer;
+}
+
+.active {
+  left: 49%;
+}

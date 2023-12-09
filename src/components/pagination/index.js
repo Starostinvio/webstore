@@ -1,23 +1,35 @@
-import { array } from "prop-types";
+import { PropTypes } from "prop-types";
 import "./style.css";
-import { memo } from "react";
-import { useEffect, useState, useRef } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { memo, useEffect, useState, useRef } from "react";
 
 function Pagination({ totalProduct, loadPageProducts }) {
-  const [selectedButton, setSelectedButton] = useState(1);
-  const [showButtons, setShowButtons] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [showButtons, setShowButtons] = useState([]);
+  const { page: currentPage = 1 } = useParams();
+  const pageRef = useRef();
+  pageRef.current = Number(currentPage);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (totalProduct) {
       setTotalPages(Math.floor(totalProduct / 10));
-      handlerAddShowButtons();
     }
   }, [totalProduct]);
 
   useEffect(() => {
+    if (pageRef.current == currentPage) {
+      const skip = (pageRef.current - 1) * 10;
+
+      loadPageProducts(skip);
+      handlerAddShowButtons();
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
     totalPages && handlerAddShowButtons();
-  }, [selectedButton, totalPages]);
+  }, [totalPages]);
 
   const handlerAddShowButtons = () => {
     const allButtons = Array.from(
@@ -25,32 +37,30 @@ function Pagination({ totalProduct, loadPageProducts }) {
       (_, index) => index + 1
     );
 
-    if (selectedButton < 3) {
+    if (pageRef.current < 3) {
       setShowButtons(() =>
         allButtons.filter((page) => page < 4 || page === totalPages)
       );
-    } else if (selectedButton > allButtons.at(-3)) {
+    } else if (pageRef.current > allButtons.at(-3)) {
       setShowButtons(() =>
         allButtons.filter((page) => page === 1 || page > totalPages - 3)
       );
-    } else if (selectedButton > 2 && selectedButton < allButtons.at(-2)) {
+    } else if (pageRef.current > 2 && pageRef.current < allButtons.at(-2)) {
       setShowButtons(() =>
         allButtons.filter(
           (page) =>
+            page == pageRef.current + 1 ||
+            page == pageRef.current ||
+            page == pageRef.current - 1 ||
             page === allButtons[0] ||
-            page === selectedButton + 1 ||
-            page === selectedButton ||
-            page === selectedButton - 1 ||
             page === allButtons.at(-1)
         )
       );
     }
   };
 
-  const handlerShowPageProducts = (page) => {
-    setSelectedButton(page);
-    const skip = (page - 1) * 10;
-    loadPageProducts(skip);
+  const goNextPage = (page) => {
+    navigate(`/${page}`);
   };
 
   return (
@@ -58,27 +68,30 @@ function Pagination({ totalProduct, loadPageProducts }) {
       {showButtons.map((item) => {
         return (
           <div key={item}>
-            {showButtons.at(-1) === item && selectedButton < totalPages - 2 && (
-              <a>...</a>
-            )}
+            {showButtons.at(-1) === item &&
+              pageRef.current < totalPages - 2 && <a>...</a>}
 
             <button
               className={
-                item === selectedButton
+                item === pageRef.current
                   ? "Pagination-button button-active"
                   : "Pagination-button"
               }
-              // key={item}
-              onClick={() => handlerShowPageProducts(item)}
+              onClick={() => goNextPage(item)}
             >
               {item}
             </button>
-            {showButtons[0] === item && selectedButton > 3 && <a>...</a>}
+            {showButtons[0] === item && pageRef.current > 3 && <a>...</a>}
           </div>
         );
       })}
     </div>
   );
 }
+
+Pagination.propTypes = {
+  totalProduct: PropTypes.number,
+  loadPageProducts: PropTypes.func,
+};
 
 export default memo(Pagination);
