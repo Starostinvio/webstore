@@ -4,14 +4,13 @@ import { cn as bem } from "@bem-react/classname";
 import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { Link } from "react-router-dom";
+import MainMenu from "../main-menu";
 
 function BasketTool({ sum, amount, onOpen, pageWords }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
-      <div className={cn("link-box")}>
-        <Link to="/">{pageWords.MAIN}</Link>
-      </div>
+      <MainMenu title={pageWords.MAIN} />
       <div>
         <span className={cn("label")}>{pageWords.IN_BASKET}</span>
         <span className={cn("total")}>
