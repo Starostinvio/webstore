@@ -14,7 +14,7 @@ function Pagination({ totalProduct, loadPageProducts }) {
 
   useEffect(() => {
     if (totalProduct) {
-      setTotalPages(Math.floor(totalProduct / 10));
+      setTotalPages(Math.ceil(totalProduct / 10));
     }
   }, [totalProduct]);
 
@@ -57,10 +57,6 @@ function Pagination({ totalProduct, loadPageProducts }) {
         )
       );
     }
-  };
-
-  const goNextPage = (page) => {
-    navigate(`/${page}`);
   };
 
   return (
