@@ -8,16 +8,13 @@ import { Link } from "react-router-dom";
 function Item(props) {
   const cn = bem("Item");
   const callbacks = {
-    onAdd: (e) => props.onAdd(props.item._id),
+    onAdd: (e) => props.onAdd(props.item),
+    getLink: (e) => props.getLink(props.item),
   };
 
   return (
     <div className={cn()}>
-      <Link
-        to={`/product/${props.item.title}`}
-        state={props.item._id}
-        className={cn("title")}
-      >
+      <Link to={callbacks.getLink()} className={cn("title")}>
         {props.item.title}
       </Link>
       <div className={cn("actions")}>
@@ -36,6 +33,7 @@ Item.propTypes = {
   }).isRequired,
   onAdd: PropTypes.func,
   pageWords: PropTypes.object,
+  getLink: PropTypes.func,
 };
 
 Item.defaultProps = {

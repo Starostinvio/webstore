@@ -1,40 +1,41 @@
-import { codeGenerator } from "../../utils";
 import StoreModule from "../module";
 
-class Catalog extends StoreModule {
+class Product extends StoreModule {
   constructor(store, name) {
     super(store, name);
-    this.generateCode = codeGenerator(0);
   }
 
   initState() {
     return {
-      list: [],
+      product: null,
       loading: false,
     };
   }
 
-  async load(skip) {
+  getLink(product) {
+    return `/product/${product._id}`;
+  }
+
+  async loadProduct(id) {
     try {
       this.setState(
         {
           ...this.getState(),
           loading: true,
         },
-        `Загружаются товары из АПИ`
+        `Загружается товар ${id} из АПИ`
       );
+
       const response = await fetch(
-        `/api/v1/articles?limit=10&skip=${skip}&fields=items(_id, title, price),count`
+        `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`
       );
       const json = await response.json();
-
       this.setState(
         {
           ...this.getState(),
-          list: json.result.items,
-          count: json.result.count,
+          product: json.result,
         },
-        "Загружены товары из АПИ"
+        `Загружен товар ${id} из АПИ`
       );
     } catch (error) {
       console.error(error);
@@ -44,10 +45,10 @@ class Catalog extends StoreModule {
           ...this.getState(),
           loading: false,
         },
-        `Загрузка товаров из АПИ завершена`
+        `Загрузка товар ${id} из АПИ завершена`
       );
     }
   }
 }
 
-export default Catalog;
+export default Product;

@@ -24,17 +24,24 @@ function Basket() {
     ),
     // Закрытие любой модалки
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
+    getLink: useCallback(
+      (product) => {
+        return store.actions.product.getLink(product);
+      },
+      [store]
+    ),
   };
 
   const renders = {
     itemBasket: useCallback(
-      (item, pageWords) => {
+      (item, pageWords, getLink) => {
         return (
           <ItemBasket
             item={item}
             onClose={callbacks.closeModal}
             onRemove={callbacks.removeFromBasket}
             pageWords={pageWords}
+            getLink={getLink}
           />
         );
       },
@@ -48,6 +55,7 @@ function Basket() {
         list={select.list}
         pageWords={select.PAGE_WORDS}
         renderItem={renders.itemBasket}
+        getLink={callbacks.getLink}
       />
       <BasketTotal sum={select.sum} pageWords={select.PAGE_WORDS} />
     </ModalLayout>

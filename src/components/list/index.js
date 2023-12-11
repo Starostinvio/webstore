@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import Item from "../item";
 import "./style.css";
 
-function List({ list, renderItem, pageWords }) {
+function List({ list, renderItem, pageWords, getLink }) {
   return (
     <div className="List">
       {list.map((item) => (
         <div key={item._id} className="List-item">
-          {renderItem(item, pageWords)}
+          {renderItem(item, pageWords, getLink)}
         </div>
       ))}
     </div>
@@ -23,6 +23,7 @@ List.propTypes = {
   ).isRequired,
   renderItem: PropTypes.func,
   pageWords: PropTypes.object,
+  getLink: PropTypes.func,
 };
 
 List.defaultProps = {

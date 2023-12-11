@@ -69,19 +69,23 @@ function Pagination({ totalProduct, loadPageProducts }) {
         return (
           <div key={item}>
             {showButtons.at(-1) === item &&
-              pageRef.current < totalPages - 2 && <a>...</a>}
-
-            <button
+              pageRef.current < totalPages - 2 && (
+                <a className="Pagination-dots">...</a>
+              )}
+            <Link
               className={
                 item === pageRef.current
-                  ? "Pagination-button button-active"
-                  : "Pagination-button"
+                  ? "Pagination-link link-active"
+                  : "Pagination-link"
               }
-              onClick={() => goNextPage(item)}
+              to={`/${item}`}
             >
               {item}
-            </button>
-            {showButtons[0] === item && pageRef.current > 3 && <a>...</a>}
+            </Link>
+
+            {showButtons[0] === item && pageRef.current > 3 && (
+              <a className="Pagination-dots">...</a>
+            )}
           </div>
         );
       })}
@@ -94,4 +98,4 @@ Pagination.propTypes = {
   loadPageProducts: PropTypes.func,
 };
 
-export default memo(Pagination);
+export default Pagination;

@@ -4,7 +4,7 @@ import { numberFormat } from "../../utils";
 import { cn as bem } from "@bem-react/classname";
 import PropTypes from "prop-types";
 
-function Description({ product, addToBasket }) {
+function Description({ product, addToBasket, pageWords }) {
   const cn = bem("Description");
 
   return (
@@ -21,7 +21,7 @@ function Description({ product, addToBasket }) {
       </p>
       <h2>Цена: {numberFormat(product?.price)} ₽</h2>
 
-      <button onClick={() => addToBasket(product?._id)}>Добавить</button>
+      <button onClick={() => addToBasket(product)}>{pageWords.ADD}</button>
     </div>
   );
 }
@@ -29,6 +29,7 @@ function Description({ product, addToBasket }) {
 Description.PropTypes = {
   product: PropTypes.object,
   addToBasket: PropTypes.func,
+  pageWords: PropTypes.object,
 };
 
 export default memo(Description);

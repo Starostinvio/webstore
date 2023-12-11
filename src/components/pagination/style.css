@@ -4,11 +4,12 @@
   justify-content: flex-end;
 }
 
-.Pagination-button {
-  background-color: white;
-  border: none;
+.Pagination-link {
+  text-decoration: none;
+  color: inherit;
   padding: 2px 3px 0px 3px;
   min-width: 14px;
+  display: inline-block;
   box-sizing: content-box;
 
   font-family: Arial;
@@ -21,15 +22,14 @@
   cursor: pointer;
 }
 
-.Pagination-button:hover:not(.button-active) {
+.Pagination-link:hover:not(.link-active) {
   background-color: rgb(225, 225, 225);
 }
-
-.button-active {
+.link-active {
   background-color: rgb(0, 135, 233);
   color: white;
 }
 
-.Pagination a {
+.Pagination-dots {
   cursor: default;
 }

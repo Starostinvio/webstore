@@ -10,7 +10,6 @@ function BasketTool({ sum, amount, onOpen, pageWords }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
-      <MainMenu title={pageWords.MAIN} />
       <div>
         <span className={cn("label")}>{pageWords.IN_BASKET}</span>
         <span className={cn("total")}>

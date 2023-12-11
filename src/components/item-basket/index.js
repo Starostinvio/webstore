@@ -12,13 +12,13 @@ function ItemBasket(props) {
   const callbacks = {
     onRemove: (e) => props.onRemove(props.item._id),
     onClose: (e) => props.onClose(),
+    getLink: (e) => props.getLink(props.item),
   };
 
   return (
     <div className={cn()}>
       <Link
-        to={`/product/${props.item.title}`}
-        state={props.item._id}
+        to={callbacks.getLink()}
         className={cn("title")}
         onClick={() => callbacks.onClose()}
       >
@@ -46,6 +46,7 @@ ItemBasket.propTypes = {
   }).isRequired,
   onRemove: propTypes.func,
   pageWords: PropTypes.object,
+  getLink: PropTypes.func,
 };
 
 ItemBasket.defaultProps = {
