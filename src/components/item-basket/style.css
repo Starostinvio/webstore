@@ -1,15 +1,9 @@
 /* Пункт списка */
 .ItemBasket {
   display: flex;
-<<<<<<< HEAD
-  justify-content: space-between;
-  transition: background-color 1s;
-  padding-left: 10px;
-=======
   justify-content: flex-start;
   transition: background-color 1s;
-  padding-left: 10px
->>>>>>> 0fe02a795006318a9dd0318710fa5fa608ef246f
+  padding-left: 10px;
 }
 
 .ItemBasket-code {
@@ -17,24 +11,6 @@
 }
 
 .ItemBasket-title {
-<<<<<<< HEAD
-  padding: 20px 10px;
-
-  text-decoration: none;
-
-  color: black;
-
-  font-family: Arial;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-
-  cursor: pointer;
-}
-.ItemBasket-title:hover {
-=======
   width: 100%;
   padding: 20px 10px;
 }
@@ -46,7 +22,6 @@
 
 .ItemBasket-title a:hover {
   color: #000;
->>>>>>> 0fe02a795006318a9dd0318710fa5fa608ef246f
   text-decoration: underline;
 }
 

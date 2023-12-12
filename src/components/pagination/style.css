@@ -1,40 +1,4 @@
 .Pagination {
-<<<<<<< HEAD
-  padding: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.Pagination-link {
-  text-decoration: none;
-  color: inherit;
-  padding: 2px 3px 0px 3px;
-  min-width: 14px;
-  display: inline-block;
-  box-sizing: content-box;
-
-  font-family: Arial;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: center;
-
-  cursor: pointer;
-}
-
-.Pagination-link:hover:not(.link-active) {
-  background-color: rgb(225, 225, 225);
-}
-.link-active {
-  background-color: rgb(0, 135, 233);
-  color: white;
-}
-
-.Pagination-dots {
-  cursor: default;
-}
-=======
   display: flex;
   list-style: none;
   justify-content: flex-end;
@@ -63,14 +27,14 @@
 }
 
 .Pagination-item:hover {
-  background: #E1E1E1;
+  background: #e1e1e1;
 }
 
 .Pagination-item_active,
 .Pagination-item_active:hover,
 .Pagination-item_active a,
 .Pagination-item_active a:hover {
-  background: #0087E9;
+  background: #0087e9;
   color: #fff;
 }
 
@@ -78,8 +42,5 @@
 .Pagination-item_split:hover {
   background: transparent;
   cursor: default;
-  color: #CCCCCC;
+  color: #cccccc;
 }
-
-
->>>>>>> 0fe02a795006318a9dd0318710fa5fa608ef246f
