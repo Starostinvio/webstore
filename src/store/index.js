@@ -1,4 +1,4 @@
-import * as modules from "./exports.js";
+import * as modules from './exports.js';
 
 /**
  * Хранилище состояния приложения
@@ -8,9 +8,11 @@ class Store {
     this.listeners = []; // Слушатели изменений состояния
     this.state = initState;
     /** @type {{
-     * basket: Basket,
-     * catalog: Catalog,
-     * modals: Modals
+     * basket: BasketState,
+     * catalog: CatalogState,
+     * modals: ModalsState,
+     * article: ArticleState,
+     * locale: LocaleState
      * }} */
     this.actions = {};
     for (const name of Object.keys(modules)) {
@@ -28,13 +30,19 @@ class Store {
     this.listeners.push(listener);
     // Возвращается функция для удаления добавленного слушателя
     return () => {
-      this.listeners = this.listeners.filter((item) => item !== listener);
-    };
+      this.listeners = this.listeners.filter(item => item !== listener);
+    }
   }
 
   /**
    * Выбор состояния
-   * @returns {{basket: Object, catalog: Object, modals: Object}}
+   * @returns {{
+   * basket: Object,
+   * catalog: Object,
+   * modals: Object,
+   * article: Object,
+   * locale: Object
+   * }}
    */
   getState() {
     return this.state;
@@ -44,14 +52,14 @@ class Store {
    * Установка состояния
    * @param newState {Object}
    */
-  setState(newState, description = "setState") {
+  setState(newState, description = 'setState') {
     console.group(
-      `%c${"store.setState"} %c${description}`,
-      `color: ${"#777"}; font-weight: normal`,
-      `color: ${"#333"}; font-weight: bold`
+      `%c${'store.setState'} %c${description}`,
+      `color: ${'#777'}; font-weight: normal`,
+      `color: ${'#333'}; font-weight: bold`,
     );
-    console.log(`%c${"prev:"}`, `color: ${"#d77332"}`, this.state);
-    console.log(`%c${"next:"}`, `color: ${"#2fa827"}`, newState);
+    console.log(`%c${'prev:'}`, `color: ${'#d77332'}`, this.state);
+    console.log(`%c${'next:'}`, `color: ${'#2fa827'}`, newState);
     console.groupEnd();
 
     this.state = newState;

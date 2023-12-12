@@ -1,28 +1,21 @@
-import { memo } from "react";
-import PropTypes from "prop-types";
-import { cn as bem } from "@bem-react/classname";
-import { numberFormat, plural } from "../../utils";
-import "./style.css";
-import { Link } from "react-router-dom";
-import MainMenu from "../main-menu";
+import {memo} from "react";
+import PropTypes from 'prop-types';
+import {cn as bem} from '@bem-react/classname';
+import {numberFormat, plural} from "../../utils";
+import './style.css';
 
-function BasketTool({ sum, amount, onOpen, pageWords }) {
-  const cn = bem("BasketTool");
+function BasketTool({sum, amount, onOpen, t}) {
+  const cn = bem('BasketTool');
   return (
     <div className={cn()}>
-      <div>
-        <span className={cn("label")}>{pageWords.IN_BASKET}</span>
-        <span className={cn("total")}>
-          {amount
-            ? `${amount} ${plural(
-                amount,
-                pageWords.PLURAL_PRODUCT,
-                pageWords.LANG
-              )} / ${numberFormat(sum)} ₽`
-            : pageWords.EMPTY}
-        </span>
-        <button onClick={onOpen}>{pageWords.GO}</button>
-      </div>
+      <span className={cn('label')}>{t('basket.inBasket')}</span>
+      <span className={cn('total')}>
+        {amount
+          ? `${amount} ${t('basket.articles', amount)} / ${numberFormat(sum)} ₽`
+          : t('basket.empty')
+        }
+      </span>
+      <button onClick={onOpen}>{t('basket.open')}</button>
     </div>
   );
 }
@@ -31,13 +24,15 @@ BasketTool.propTypes = {
   onOpen: PropTypes.func.isRequired,
   sum: PropTypes.number,
   amount: PropTypes.number,
-  pageWords: PropTypes.object,
+  t: PropTypes.func
 };
 
 BasketTool.defaultProps = {
-  onOpen: () => {},
+  onOpen: () => {
+  },
   sum: 0,
   amount: 0,
-};
+  t: (text) => text
+}
 
 export default memo(BasketTool);

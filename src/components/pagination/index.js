@@ -1,97 +1,73 @@
-import { PropTypes } from "prop-types";
-import "./style.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { memo, useEffect, useState, useRef } from "react";
+import {memo} from 'react';
+import PropTypes from "prop-types";
+import {cn as bem} from '@bem-react/classname'
+import './style.css';
 
-function Pagination({ totalProduct, loadPageProducts }) {
-  const [totalPages, setTotalPages] = useState(0);
-  const [showButtons, setShowButtons] = useState([]);
-  const { page: currentPage = 1 } = useParams();
-  const pageRef = useRef();
-  pageRef.current = Number(currentPage);
+function Pagination(props) {
 
-  const navigate = useNavigate();
+  // Количество страниц
+  const length = Math.ceil(props.count / Math.max(props.limit, 1));
 
-  useEffect(() => {
-    if (totalProduct) {
-      setTotalPages(Math.ceil(totalProduct / 10));
+  // Номера слева и справа относительно активного номера, которые остаются видимыми
+  let left = Math.max(props.page - props.indent, 1);
+  let right = Math.min(left + props.indent * 2, length);
+  // Корректировка когда страница в конце
+  left = Math.max(right - props.indent * 2, 1);
+
+  // Массив номеров, чтобы удобней рендерить
+  let items = [];
+  // Первая страница всегда нужна
+  if (left > 1) items.push(1);
+  // Пропуск
+  if (left > 2) items.push(null);
+  // Последовательность страниц
+  for (let page = left; page <= right; page++) items.push(page);
+  // Пропуск
+  if (right < length - 1) items.push(null);
+  // Последняя страница
+  if (right < length) items.push(length);
+
+  const onClickHandler = (number) => (e) => {
+    if (props.onChange) {
+      e.preventDefault();
+      props.onChange(number);
     }
-  }, [totalProduct]);
+  }
 
-  useEffect(() => {
-    if (pageRef.current == currentPage) {
-      const skip = (pageRef.current - 1) * 10;
-
-      loadPageProducts(skip);
-      handlerAddShowButtons();
-    }
-  }, [currentPage]);
-
-  useEffect(() => {
-    totalPages && handlerAddShowButtons();
-  }, [totalPages]);
-
-  const handlerAddShowButtons = () => {
-    const allButtons = Array.from(
-      { length: totalPages },
-      (_, index) => index + 1
-    );
-
-    if (pageRef.current < 3) {
-      setShowButtons(() =>
-        allButtons.filter((page) => page < 4 || page === totalPages)
-      );
-    } else if (pageRef.current > allButtons.at(-3)) {
-      setShowButtons(() =>
-        allButtons.filter((page) => page === 1 || page > totalPages - 3)
-      );
-    } else if (pageRef.current > 2 && pageRef.current < allButtons.at(-2)) {
-      setShowButtons(() =>
-        allButtons.filter(
-          (page) =>
-            page == pageRef.current + 1 ||
-            page == pageRef.current ||
-            page == pageRef.current - 1 ||
-            page === allButtons[0] ||
-            page === allButtons.at(-1)
-        )
-      );
-    }
-  };
-
+  const cn = bem('Pagination');
   return (
-    <div className="Pagination">
-      {showButtons.map((item) => {
-        return (
-          <div key={item}>
-            {showButtons.at(-1) === item &&
-              pageRef.current < totalPages - 2 && (
-                <a className="Pagination-dots">...</a>
-              )}
-            <Link
-              className={
-                item === pageRef.current
-                  ? "Pagination-link link-active"
-                  : "Pagination-link"
-              }
-              to={`/${item}`}
-            >
-              {item}
-            </Link>
-
-            {showButtons[0] === item && pageRef.current > 3 && (
-              <a className="Pagination-dots">...</a>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
+    <ul className={cn()}>
+      {items.map((number, index) => (
+        <li key={index}
+            className={cn('item', {active: number === props.page, split: !number})}
+            onClick={onClickHandler(number)}>
+          {number
+            ? (props.makeLink
+                ? <a href={props.makeLink(number)}>{number}</a>
+                : number
+            )
+            : '...'
+          }
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 Pagination.propTypes = {
-  totalProduct: PropTypes.number,
-  loadPageProducts: PropTypes.func,
-};
+  page: PropTypes.number,
+  limit: PropTypes.number,
+  count: PropTypes.number,
+  indent: PropTypes.number,
+  onChange: PropTypes.func,
+  makeLink: PropTypes.func,
+}
 
-export default Pagination;
+Pagination.defaultProps = {
+  page: 1,
+  limit: 10,
+  count: 1000,
+  indent: 1,
+}
+
+export default memo(Pagination);
