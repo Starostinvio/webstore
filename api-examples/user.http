@@ -2,6 +2,8 @@
 # Авторизация
 
 POST http://example.front.ylab.io/api/v1/users/sign
+http://example.front.ylab.io/api/v1/users/sign?fields=_id%2Cprofile%28name%29
+
 Content-Type: application/json
 
 {

@@ -1,0 +1,33 @@
+.AuthForm {
+  white-space: wrap;
+  max-width: 203px;
+  padding: 20px;
+  font-family: Arial;
+}
+
+.AuthForm h2 {
+  margin: 22px 0px 17px;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+}
+.AuthForm label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  display: inline-block;
+}
+
+.AuthForm-box input {
+  height: 20px;
+}
+.AuthForm-box > :not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.AuthForm button {
+  font-size: 13px;
+}

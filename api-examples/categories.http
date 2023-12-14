@@ -2,3 +2,8 @@
 # Список категорий
 
 GET http://example.front.ylab.io/api/v1/categories?fields=_id,title,parent(_id)&limit=*
+
+
+# Телефоны
+
+http://example.front.ylab.io/api/v1/articles?search%5Bcategory%5D=65782dc9cbf638685992a339&lang=ru&limit=10&skip=0&fields=%2A

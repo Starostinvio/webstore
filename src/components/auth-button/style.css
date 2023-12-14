@@ -1,0 +1,8 @@
+.AuthButton {
+  margin-right: 10px;
+}
+
+.AuthButton a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -16,12 +16,28 @@ class CatalogState extends StoreModule {
         limit: 10,
         sort: "order",
         query: "",
+        search: "",
       },
       count: 0,
+      categories: [],
       waiting: false,
     };
   }
-
+  async initCategories() {
+    const response = await fetch(
+      "api/v1/categories?fields=_id,title,parent(_id)&limit=*"
+    );
+    const json = await response.json();
+    // console.log("catalog/index json", json.result.items);
+    this.setState(
+      {
+        ...this.getState(),
+        categories: json.result.items,
+        // waiting: false,
+      },
+      "Загружен список категорий из АПИ"
+    );
+  }
   /**
    * Инициализация параметров.
    * Восстановление из адреса
@@ -37,6 +53,7 @@ class CatalogState extends StoreModule {
       validParams.limit = Math.min(Number(urlParams.get("limit")) || 10, 50);
     if (urlParams.has("sort")) validParams.sort = urlParams.get("sort");
     if (urlParams.has("query")) validParams.query = urlParams.get("query");
+    if (urlParams.has("search")) validParams.search = urlParams.get("search");
     await this.setParams(
       { ...this.initState().params, ...validParams, ...newParams },
       true
@@ -84,18 +101,23 @@ class CatalogState extends StoreModule {
       window.history.pushState({}, "", url);
     }
 
+    const inSearch = params.search ? "category" : "";
+
     const apiParams = {
       limit: params.limit,
       skip: (params.page - 1) * params.limit,
       fields: "items(*),count",
       sort: params.sort,
+      query: params.query,
       "search[query]": params.query,
+      [`search[${inSearch}]`]: params.search,
     };
 
     const response = await fetch(
       `/api/v1/articles?${new URLSearchParams(apiParams)}`
     );
     const json = await response.json();
+
     this.setState(
       {
         ...this.getState(),
