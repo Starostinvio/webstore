@@ -1,0 +1,36 @@
+.UserInfo {
+  padding: 20px;
+  font-family: Arial;
+}
+
+.UserInfo h2 {
+  margin: 22px 0px 30px;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.UserInfo p {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.UserInfo p:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.UserInfo p strong {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+}

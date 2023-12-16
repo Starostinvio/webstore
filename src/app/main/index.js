@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
@@ -10,6 +10,7 @@ import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
 import SideLayout from "../../components/side-layout";
 import AuthButton from "../../components/auth-button";
+import AuthServices from "../../containers/auth-services";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -17,16 +18,10 @@ import AuthButton from "../../components/auth-button";
 function Main() {
   const store = useStore();
 
-  // useInit(
-  //   () => {
-  //     store.actions.catalog.initCategories();
-  //   },
-  //   [],
-  //   true
-  // );
-
   useInit(
     () => {
+      store.actions.authentication.makeAuthenticatedRequest();
+      store.actions.authentication.cleanServerError();
       store.actions.catalog.initParams();
       store.actions.catalog.initCategories();
     },
@@ -36,11 +31,16 @@ function Main() {
 
   const { t } = useTranslate();
 
+  const callbacks = {
+    getToken: useCallback(
+      () => store.actions.authentication.getToken(),
+      [store]
+    ),
+  };
+
   return (
     <PageLayout>
-      <SideLayout side="end" padding="small">
-        <AuthButton title="Вход" />
-      </SideLayout>
+      <AuthServices />
       <Head title={t("title")}>
         <LocaleSelect />
       </Head>

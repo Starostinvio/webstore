@@ -1,4 +1,5 @@
-import { useMemo, useCallback } from "react";
+import { memo, useMemo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import useTranslate from "../../hooks/use-translate";
 import AuthButton from "../../components/auth-button";
 import BasketTool from "../../components/basket-tool";
@@ -11,20 +12,22 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import AuthForm from "../../components/auth-form";
 import { useEffect } from "react";
-
 import AuthServices from "../../containers/auth-services";
+import UserInfo from "../../components/user-info";
+import useInit from "../../hooks/use-init";
 
-// import loginRequest from "../../api-auth/login-request";
-
-function Authentication() {
+function UserProfile() {
   const store = useStore();
+  const navigate = useNavigate();
 
   const select = useSelector((state) => ({
     amount: state.basket.amount,
     sum: state.basket.sum,
     lang: state.locale.lang,
-    serverError: state.authentication.serverError,
     waiting: state.authentication.waiting,
+    serverError: state.authentication.serverError,
+    token: state.authentication.token,
+    userProfile: state.authentication.userProfile,
   }));
 
   const callbacks = {
@@ -40,16 +43,16 @@ function Authentication() {
       },
       [store]
     ),
-    onSubmit: useCallback(
-      (login, password) => store.actions.authentication.login(login, password),
+    makeAuthenticatedRequest: useCallback(() => {
+      console.log("callbacks отработал");
+      store.actions.authentication.makeAuthenticatedRequest();
+    }, [store]),
+    cleanServerError: useCallback(
+      () => store.actions.authentication.cleanServerError(),
       [store]
     ),
     getToken: useCallback(
       () => store.actions.authentication.getToken(),
-      [store]
-    ),
-    cleanServerError: useCallback(
-      () => store.actions.authentication.cleanServerError(),
       [store]
     ),
   };
@@ -60,11 +63,22 @@ function Authentication() {
     menu: useMemo(() => [{ key: 1, title: t("menu.main"), link: "/" }], [t]),
   };
 
+  useInit(
+    () => {
+      callbacks.makeAuthenticatedRequest();
+    },
+    [],
+    true
+  );
   useEffect(() => {
-    return () => {
-      callbacks.cleanServerError();
-    };
-  }, []);
+    if (select.serverError) {
+      navigate("/login", { replace: true });
+    }
+  }, [select.serverError]);
+
+  useEffect(() => {
+    if (!callbacks.getToken()) navigate("/", { replace: true });
+  }, [select.token]);
 
   return (
     <PageLayout>
@@ -81,14 +95,9 @@ function Authentication() {
           t={t}
         />
       </SideLayout>
-      <AuthForm
-        onSubmit={callbacks.onSubmit}
-        waiting={select.waiting}
-        serverError={select.serverError}
-        getToken={callbacks.getToken}
-      />
+      <UserInfo title="Профиль" userProfile={select.userProfile} />
     </PageLayout>
   );
 }
 
-export default Authentication;
+export default memo(UserProfile);
