@@ -14,7 +14,7 @@ function CatalogFilter() {
   const store = useStore();
 
   const select = useSelector((state) => ({
-    categories: state.catalog.categories,
+    categories: state.categories.categories,
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     search: state.catalog.params.search,
@@ -24,7 +24,6 @@ function CatalogFilter() {
     // Сортировка
     onSort: useCallback(
       (sort) => {
-        console.log("catalog-filter callback onSort sort", sort);
         return store.actions.catalog.setParams({ sort });
       },
       [store]
@@ -42,7 +41,6 @@ function CatalogFilter() {
     ),
     onCategory: useCallback(
       (search) => {
-        console.log("ON CATEGORY search", typeof search);
         return store.actions.catalog.setParams({ search, page: 1 });
       },
       [store]
@@ -68,7 +66,6 @@ function CatalogFilter() {
   return (
     <SideLayout padding="medium">
       <SelectCategories
-        // options={options.sort}
         categories={select.categories}
         value={select.search}
         onChange={callbacks.onCategory}

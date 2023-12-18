@@ -1,4 +1,5 @@
 import { useMemo, useCallback } from "react";
+import { useNavigate, useLocation, useHistory } from "react-router-dom";
 import useTranslate from "../../hooks/use-translate";
 import AuthButton from "../../components/auth-button";
 import BasketTool from "../../components/basket-tool";
@@ -14,9 +15,9 @@ import { useEffect } from "react";
 
 import AuthServices from "../../containers/auth-services";
 
-// import loginRequest from "../../api-auth/login-request";
-
 function Authentication() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const store = useStore();
 
   const select = useSelector((state) => ({
@@ -25,6 +26,7 @@ function Authentication() {
     lang: state.locale.lang,
     serverError: state.authentication.serverError,
     waiting: state.authentication.waiting,
+    sessionActive: state.authentication.sessionActive,
   }));
 
   const callbacks = {
@@ -65,6 +67,12 @@ function Authentication() {
       callbacks.cleanServerError();
     };
   }, []);
+
+  useEffect(() => {
+    let redirect = location.state?.previousLocation.pathname;
+    if (!redirect) redirect = "/profile";
+    if (callbacks.getToken()) navigate(redirect, { replace: true });
+  }, [select.sessionActive]);
 
   return (
     <PageLayout>

@@ -3,9 +3,11 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   padding: 0;
-  margin-left: -5px;
-  margin-right: -5px;
+  /* margin-left: -5px;
+  margin-right: -5px; */
   align-items: center;
+
+  max-width: 100%;
 }
 
 .SideLayout_side_start {
@@ -21,13 +23,19 @@
 }
 
 .SideLayout_padding_small {
-  padding: 10px;
+  /* padding: 10px; */
+  padding: 10px 5px;
 }
 
 .SideLayout_padding_medium {
-  padding: 20px;
+  /* padding: 20px; */
+  padding: 20px 15px;
 }
 
 .SideLayout-item {
   margin: 0 5px;
+}
+
+.SideLayout_border_bottom {
+  border-bottom: 1px solid #dcdcdc;
 }

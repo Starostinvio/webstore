@@ -6,7 +6,7 @@ class Authentication extends StoreModule {
       baseUrl: "/api/v1/users",
       waiting: false,
       serverError: "",
-      token: "",
+      sessionActive: false,
     };
   }
 
@@ -17,17 +17,39 @@ class Authentication extends StoreModule {
     window.localStorage.setItem("token", token);
     this.setState({
       ...this.getState(),
-      token: token,
     });
   }
 
-  removeToken() {
-    window.localStorage.removeItem("token");
-    this.setState({
-      ...this.getState(),
-      token: "",
-      userProfile: null,
-    });
+  async removeToken() {
+    try {
+      const token = this.getToken();
+      if (!token) throw new Error("Token not fined");
+
+      const response = await fetch(`${this.getState().baseUrl}/sign`, {
+        method: "DELETE",
+        headers: { "X-Token": token, "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete token");
+      }
+      const data = await response.json();
+
+      window.localStorage.removeItem("token");
+
+      this.setState({
+        ...this.getState(),
+
+        userProfile: null,
+        sessionActive: false,
+      });
+    } catch (e) {
+      this.setState({
+        ...this.getState(),
+
+        userProfile: null,
+        sessionActive: false,
+      });
+    }
   }
 
   cleanServerError() {
@@ -41,9 +63,8 @@ class Authentication extends StoreModule {
     try {
       const token = this.getToken();
       if (!token) {
-        throw new Error("token undefined");
+        throw new Error("token not fined");
       }
-      // http://example.front.ylab.io/api/v1/users/self?fields=_id%2Cemail%2Cprofile%28name%29
 
       const response = await fetch(`${this.getState().baseUrl}/self?fields=*`, {
         method: "GET",
@@ -54,29 +75,34 @@ class Authentication extends StoreModule {
         },
       });
       if (!response.ok) {
-        throw new Error("token undefined");
+        throw new Error("token not fined");
       }
       const data = await response.json();
 
       this.setState({
         ...this.getState(),
-        token: this.getToken(),
+
         userProfile: {
           userName: data.result.profile.name,
           phone: data.result.profile.phone,
           email: data.result.email,
         },
+        sessionActive: true,
       });
+
+      return true;
     } catch (e) {
       this.setState({
         ...this.getState(),
-        serverError: e,
+
+        sessionActive: false,
       });
+
+      return false;
     }
   }
 
   async login(login, password) {
-    console.log("login");
     this.setState({
       ...this.getState(),
       waiting: true,
@@ -105,11 +131,11 @@ class Authentication extends StoreModule {
       this.setToken(data.result.token);
       this.setState({
         ...this.getState(),
-        token: data.result.token,
+
+        sessionActive: true,
       });
     } catch (e) {
       const errorObj = JSON.parse(e.message);
-
       this.setState({
         ...this.getState(),
         serverError: errorObj.error.data.issues[0].message,

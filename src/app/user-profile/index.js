@@ -1,5 +1,5 @@
 import { memo, useMemo, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useTranslate from "../../hooks/use-translate";
 import AuthButton from "../../components/auth-button";
 import BasketTool from "../../components/basket-tool";
@@ -11,7 +11,7 @@ import LocaleSelect from "../../containers/locale-select";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import AuthForm from "../../components/auth-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AuthServices from "../../containers/auth-services";
 import UserInfo from "../../components/user-info";
 import useInit from "../../hooks/use-init";
@@ -19,15 +19,22 @@ import useInit from "../../hooks/use-init";
 function UserProfile() {
   const store = useStore();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useInit(
+    () => {
+      store.actions.profile.makeProfileRequest();
+    },
+    [],
+    true
+  );
 
   const select = useSelector((state) => ({
     amount: state.basket.amount,
     sum: state.basket.sum,
     lang: state.locale.lang,
     waiting: state.authentication.waiting,
-    serverError: state.authentication.serverError,
-    token: state.authentication.token,
-    userProfile: state.authentication.userProfile,
+    userData: state.profile.userData,
   }));
 
   const callbacks = {
@@ -43,16 +50,9 @@ function UserProfile() {
       },
       [store]
     ),
-    makeAuthenticatedRequest: useCallback(() => {
-      console.log("callbacks отработал");
-      store.actions.authentication.makeAuthenticatedRequest();
-    }, [store]),
+
     cleanServerError: useCallback(
       () => store.actions.authentication.cleanServerError(),
-      [store]
-    ),
-    getToken: useCallback(
-      () => store.actions.authentication.getToken(),
       [store]
     ),
   };
@@ -62,23 +62,6 @@ function UserProfile() {
   const options = {
     menu: useMemo(() => [{ key: 1, title: t("menu.main"), link: "/" }], [t]),
   };
-
-  useInit(
-    () => {
-      callbacks.makeAuthenticatedRequest();
-    },
-    [],
-    true
-  );
-  useEffect(() => {
-    if (select.serverError) {
-      navigate("/login", { replace: true });
-    }
-  }, [select.serverError]);
-
-  useEffect(() => {
-    if (!callbacks.getToken()) navigate("/", { replace: true });
-  }, [select.token]);
 
   return (
     <PageLayout>
@@ -95,7 +78,7 @@ function UserProfile() {
           t={t}
         />
       </SideLayout>
-      <UserInfo title="Профиль" userProfile={select.userProfile} />
+      <UserInfo title="Профиль" userData={select.userData} />
     </PageLayout>
   );
 }

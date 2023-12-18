@@ -23,13 +23,24 @@
 
 .AuthForm-box input {
   height: 20px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+
+  border: 1px solid #767676;
 }
 .AuthForm-box > :not(:last-child) {
   margin-bottom: 20px;
 }
 
 .AuthForm button {
+  font-family: Arial;
   font-size: 13px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0em;
 }
 
 .AuthForm-error {
@@ -37,5 +48,5 @@
   font-weight: 400;
   line-height: 18px;
 
-  color: red;
+  color: #ff0000;
 }

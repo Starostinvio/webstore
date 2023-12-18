@@ -20,10 +20,8 @@ function Main() {
 
   useInit(
     () => {
-      store.actions.authentication.makeAuthenticatedRequest();
-      store.actions.authentication.cleanServerError();
       store.actions.catalog.initParams();
-      store.actions.catalog.initCategories();
+      store.actions.categories.initCategories();
     },
     [],
     true

@@ -19,24 +19,8 @@ class CatalogState extends StoreModule {
         search: "",
       },
       count: 0,
-      categories: [],
       waiting: false,
     };
-  }
-  async initCategories() {
-    const response = await fetch(
-      "api/v1/categories?fields=_id,title,parent(_id)&limit=*"
-    );
-    const json = await response.json();
-    // console.log("catalog/index json", json.result.items);
-    this.setState(
-      {
-        ...this.getState(),
-        categories: json.result.items,
-        // waiting: false,
-      },
-      "Загружен список категорий из АПИ"
-    );
   }
 
   /**

@@ -1,17 +1,17 @@
 import "./style.css";
 import { memo } from "react";
-function UserInfo({ title, userProfile }) {
+function UserInfo({ title, userData }) {
   return (
     <div className="UserInfo">
       <h2>{title}</h2>
       <p>
-        Имя: <strong>{userProfile?.userName}</strong>
+        Имя: <strong>{userData?.userName}</strong>
       </p>
       <p>
-        Телефон: <strong>{userProfile?.phone}</strong>
+        Телефон: <strong>{userData?.phone}</strong>
       </p>
       <p>
-        email: <strong>{userProfile?.email}</strong>
+        email: <strong>{userData?.email}</strong>
       </p>
     </div>
   );

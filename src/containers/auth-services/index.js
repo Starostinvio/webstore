@@ -6,6 +6,7 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProfileLink from "../../components/profile-link";
+import selectCategories from "../../components/select-categories";
 
 function AuthServices() {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ function AuthServices() {
   const store = useStore();
 
   const select = useSelector((state) => ({
-    token: state.authentication.token,
     userProfile: state.authentication.userProfile,
+    sessionActive: state.authentication.sessionActive,
   }));
 
   const callbacks = {
@@ -26,22 +27,28 @@ function AuthServices() {
       () => store.actions.authentication.removeToken(),
       [store]
     ),
+    makeAuthenticatedRequest: useCallback(() => {
+      store.actions.authentication.makeAuthenticatedRequest();
+    }, [store]),
   };
   useEffect(() => {
     if (location.pathname === "/login") {
-      select.token && navigate("/", { replace: false });
+      callbacks.makeAuthenticatedRequest() && navigate("/", { replace: false });
     }
-  }, [select.token]);
+  }, [select.sessionActive]);
 
   return (
-    <SideLayout side="end" padding="small">
-      {select.token ? (
+    <SideLayout side="end" padding="small" border="bottom">
+      {select.sessionActive ? (
         <>
-          <ProfileLink userName={select.userProfile?.userName} />
+          <ProfileLink
+            userName={select.userProfile?.userName}
+            location={location}
+          />
           <AuthButton title="Выход" action={callbacks.removeToken} />
         </>
       ) : (
-        <AuthButton title="Вход" />
+        <AuthButton title="Вход" location={location} />
       )}
     </SideLayout>
   );
