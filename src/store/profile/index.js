@@ -1,59 +1,36 @@
-import StoreModule from "../module";
+import StoreModule from '../module';
 
-class Profile extends StoreModule {
+/**
+ * Детальная информация о пользователе
+ */
+class ProfileState extends StoreModule {
+
   initState() {
     return {
-      baseUrl: "/api/v1/users",
-      waiting: false,
-      userData: {
-        token: "",
-        userName: "",
-        phone: "",
-        email: "",
-      },
-    };
-  }
-
-  getToken() {
-    return window.localStorage.getItem("token");
-  }
-
-  async makeProfileRequest() {
-    try {
-      const token = this.getToken();
-      if (!token) {
-        throw new Error("token not fined");
-      }
-
-      const response = await fetch(`${this.getState().baseUrl}/self?fields=*`, {
-        method: "GET",
-        headers: {
-          "X-Token": token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("User not find");
-      }
-      const data = await response.json();
-
-      this.setState({
-        ...this.getState(),
-
-        userData: {
-          token: this.getToken(),
-          userName: data.result.profile.name,
-          phone: data.result.profile.phone,
-          email: data.result.email,
-        },
-      });
-    } catch (e) {
-      this.setState({
-        ...this.getState(),
-      });
+      data: {},
+      waiting: false // признак ожидания загрузки
     }
+  }
+
+  /**
+   * Загрузка профиля
+   * @return {Promise<void>}
+   */
+  async load() {
+    // Сброс текущего профиля и установка признака ожидания загрузки
+    this.setState({
+      data: {},
+      waiting: true
+    });
+
+    const {data} = await this.services.api.request({url: `/api/v1/users/self`});
+
+    // Профиль загружен успешно
+    this.setState({
+      data: data.result,
+      waiting: false
+    }, 'Загружен профиль из АПИ');
   }
 }
 
-export default Profile;
+export default ProfileState;

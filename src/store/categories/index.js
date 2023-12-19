@@ -1,32 +1,39 @@
-import StoreModule from "../module";
+import StoreModule from '../module';
 
 /**
- * Состояние каталога - параметры фильтра и список товара
+ * Список категорий
  */
-class Categories extends StoreModule {
+class CategoriesState extends StoreModule {
+
   /**
    * Начальное состояние
    * @return {Object}
    */
   initState() {
     return {
-      categories: [],
+      list: [],
+      waiting: false
     };
   }
-  async initCategories() {
-    const response = await fetch(
-      "api/v1/categories?fields=_id,title,parent(_id)&limit=*"
-    );
-    const json = await response.json();
 
-    this.setState(
-      {
-        ...this.getState(),
-        categories: json.result.items,
-      },
-      "Загружен список категорий из АПИ"
-    );
+  /**
+   * Загрузка списка товаров
+   */
+  async load() {
+    this.setState({...this.getState(), waiting: true}, 'Ожидание загрузки категорий');
+
+    const res = await this.services.api.request({
+      url: `/api/v1/categories?fields=_id,title,parent(_id)&limit=*`
+    });
+
+    // Товар загружен успешно
+    this.setState({
+      ...this.getState(),
+      list: res.data.result.items,
+      waiting: false
+    }, 'Категории загружены');
   }
+
 }
 
-export default Categories;
+export default CategoriesState;

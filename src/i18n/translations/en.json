@@ -9,10 +9,25 @@
   "basket.total": "Total",
   "basket.unit": "pcs",
   "basket.delete": "Delete",
+<<<<<<< HEAD
   "article.add": "Add",
   "filter.reset": "Reset",
   "basket.articles": {
     "one": "article",
     "other": "articles"
   }
+=======
+  "basket.articles": {
+    "one": "article",
+    "other": "articles"
+  },
+  "article.add": "Add",
+  "filter.reset": "Reset",
+  "auth.title": "Sign In",
+  "auth.login": "Login",
+  "auth.password": "Password",
+  "auth.signIn": "Sign in",
+  "session.signIn": "Sign In",
+  "session.signOut": "Sign Out"
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }

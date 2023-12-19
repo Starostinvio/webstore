@@ -27,14 +27,22 @@
 }
 
 .Pagination-item:hover {
+<<<<<<< HEAD
   background: #e1e1e1;
+=======
+  background: #E1E1E1;
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }
 
 .Pagination-item_active,
 .Pagination-item_active:hover,
 .Pagination-item_active a,
 .Pagination-item_active a:hover {
+<<<<<<< HEAD
   background: #0087e9;
+=======
+  background: #0087E9;
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
   color: #fff;
 }
 
@@ -42,5 +50,12 @@
 .Pagination-item_split:hover {
   background: transparent;
   cursor: default;
+<<<<<<< HEAD
   color: #cccccc;
 }
+=======
+  color: #CCCCCC;
+}
+
+
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300

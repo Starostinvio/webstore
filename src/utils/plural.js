@@ -7,12 +7,17 @@
  * @param [locale] {String} Локаль (код языка)
  * @returns {String}
  */
+<<<<<<< HEAD:src/utils.js
 export function plural(value, variants = {}, locale = "ru-RU") {
+=======
+export default function plural(value, variants = {}, locale = 'ru-RU') {
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300:src/utils/plural.js
   // Получаем фурму кодовой строкой: 'zero', 'one', 'two', 'few', 'many', 'other'
   // В русском языке 3 формы: 'one', 'few', 'many', и 'other' для дробных
   // В английском 2 формы: 'one', 'other'
   const key = new Intl.PluralRules(locale).select(value);
   // Возвращаем вариант по ключу, если он есть
+<<<<<<< HEAD:src/utils.js
   return variants[key] || "";
 }
 
@@ -73,4 +78,7 @@ export function sortCategory(products) {
   const result = childTree(firstChildren, mainParent);
 
   return result;
+=======
+  return variants[key] || '';
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300:src/utils/plural.js
 }

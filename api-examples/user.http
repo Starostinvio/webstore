@@ -2,8 +2,11 @@
 # Авторизация
 
 POST http://example.front.ylab.io/api/v1/users/sign
+<<<<<<< HEAD
 http://example.front.ylab.io/api/v1/users/sign?fields=_id%2Cprofile%28name%29
 
+=======
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 Content-Type: application/json
 
 {
@@ -15,12 +18,20 @@ Content-Type: application/json
 # Выход - отмена авториазции для удаления токена
 
 DELETE http://example.front.ylab.io/api/v1/users/sign
+<<<<<<< HEAD
 X-Token: 56677139a343b4c4c8087a3da579e9fabdbccc6231941654b094a4c011a4a582
+=======
+X-Token: ed9b341d85860b91420b216594a433c1e3d564cd7246e714ee02b3ec395a6ce5
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 Content-Type: application/json
 
 ###
 # Свой профиль
 
 GET http://example.front.ylab.io/api/v1/users/self?fields=*
+<<<<<<< HEAD
 X-Token: 56677139a343b4c4c8087a3da579e9fabdbccc6231941654b094a4c011a4a582
+=======
+X-Token: ed9b341d85860b91420b216594a433c1e3d564cd7246e714ee02b3ec395a6ce5
+>>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 Content-Type: application/json
