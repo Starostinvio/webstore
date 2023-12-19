@@ -3,17 +3,9 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   padding: 0;
-<<<<<<< HEAD
-  /* margin-left: -5px;
-  margin-right: -5px; */
-  align-items: center;
-
-  max-width: 100%;
-=======
   margin-left: -5px;
   margin-right: -5px;
   align-items: center;
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }
 
 .SideLayout_side_start {
@@ -29,30 +21,13 @@
 }
 
 .SideLayout_padding_small {
-<<<<<<< HEAD
-  /* padding: 10px; */
-  padding: 10px 5px;
-}
-
-.SideLayout_padding_medium {
-  /* padding: 20px; */
-  padding: 20px 15px;
-=======
   padding: 10px 20px;
 }
 
 .SideLayout_padding_medium {
   padding: 20px;
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }
 
 .SideLayout-item {
   margin: 0 5px;
 }
-<<<<<<< HEAD
-
-.SideLayout_border_bottom {
-  border-bottom: 1px solid #dcdcdc;
-}
-=======
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300

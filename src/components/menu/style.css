@@ -2,11 +2,7 @@
   display: flex;
   list-style: none;
   justify-content: flex-start;
-<<<<<<< HEAD
-  padding: 20px 20px 20px 15px;
-=======
   padding: 20px;
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
   margin: 0;
   font-size: 18px;
 }
@@ -15,14 +11,6 @@
   display: block;
   padding: 2px 4px 3px 2px;
   margin: 0 2px;
-<<<<<<< HEAD
-
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 21px;
-=======
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }
 
 .Menu-item:first-child {
@@ -34,16 +22,3 @@
   margin-right: 0;
   padding-right: 0;
 }
-<<<<<<< HEAD
-.Menu-item a {
-  color: #0087e9;
-
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-=======
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300

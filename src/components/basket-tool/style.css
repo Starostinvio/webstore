@@ -2,19 +2,11 @@
 .BasketTool {
   display: flex;
   justify-content: flex-end;
-<<<<<<< HEAD
-  padding: 20px 15px 20px 20px;
-=======
   padding: 20px;
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
   font-size: 18px;
 }
 
 .BasketTool-label {
-<<<<<<< HEAD
-=======
-
->>>>>>> 7ce52deda52efb25705213c983ac6c6f511ec300
 }
 
 .BasketTool-total {
