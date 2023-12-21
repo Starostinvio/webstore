@@ -6,20 +6,25 @@ export default {
    */
   load: (id) => {
     return async (dispatch, getState, services) => {
+      console.log("actionsLoad services", services.api);
       // Сброс текущего товара и установка признака ожидания загрузки
-      dispatch({type: 'article/load-start'});
+      dispatch({ type: "article/load-start" });
 
       try {
         const res = await services.api.request({
-          url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`
+          url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
         });
-        // Товар загружен успешно
-        dispatch({type: 'article/load-success', payload: {data: res.data.result}});
 
+        console.log("redux-store/article/actions/", res);
+        // Товар загружен успешно
+        dispatch({
+          type: "article/load-success",
+          payload: { data: res.data.result },
+        });
       } catch (e) {
         //Ошибка загрузки
-        dispatch({type: 'article/load-error'});
+        dispatch({ type: "article/load-error" });
       }
-    }
+    };
   },
-}
+};

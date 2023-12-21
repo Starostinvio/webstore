@@ -3,3 +3,27 @@
 GET http://example.front.ylab.io/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=65817bed5c295a2ff2fcd189
 
 # Остальные методы в http://example.front.ylab.io/api/v1/docs/ (http://localhost:8010/api/v1/docs/)
+
+http://example.front.ylab.io/api/v1/comments?limit=10&skip=0&fields=%2A
+
+# Получение коментариев одного товара
+curl -X 'GET' \
+  'http://example.front.ylab.io/api/v1/comments?search%5Bparent%5D=65817bed5c295a2ff2fcd180&limit=10&skip=0&fields=%2A' \
+  -H 'accept: application/json'
+
+
+  #id user test_1
+  65817be05c295a2ff2fcc582
+
+
+  #Отправка нового коментария
+
+  curl -X 'POST' \
+  'http://example.front.ylab.io/api/v1/comments?lang=ru&fields=%2A' \
+  -H 'accept: application/json' \
+  -H 'X-Token: c431a545fa0976a22822bc1c6d25137599b574b6693e579a6b1b5a066628fbc0' \
+  -H 'Content-Type: application/json' \
+  -d {
+  "text": "Очень важный комментарий 5346754",
+  "parent": {"_id": "65817bed5c295a2ff2fcd180", "_type": "article"}
+}

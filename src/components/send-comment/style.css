@@ -1,0 +1,44 @@
+.SendComment {
+  display: flex;
+  flex-direction: column;
+
+  font-family: Arial;
+}
+.SendComment > :not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.SendComment-title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.SendComment-field {
+  max-width: 914px;
+  height: 80px;
+  padding: 5px;
+
+  border: 1px solid #666666;
+  resize: none;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.SendComment-button-box {
+  display: flex;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.SendComment-button-box > :not(:last-child) {
+  margin-right: 10px;
+}
