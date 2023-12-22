@@ -1,14 +1,10 @@
 import useSelector from "../../hooks/use-selector";
 
-export default {
-  // select: storeSelector((state) => ({
-  //   waiting: state.session.waiting,
-  //   errors: state.session.errors,
-  //   token: state.session.token,
-  // })),
-
+const commentsAction = {
   commentsLoad: (id) => {
     return async (dispatch, getState, services) => {
+      const token = localStorage.getItem("token");
+      console.log("ttooooooken", token);
       try {
         dispatch({ type: "comments/load-start" });
 
@@ -26,18 +22,40 @@ export default {
       }
     };
   },
-  sendComments: (token) => {
+  sendComments: (text, id, type, articleId) => {
     return async (dispatch, getState, services) => {
+      const token = localStorage.getItem("token");
+
       try {
         dispatch({ type: "comments/load-start" });
-
         const res = await services.api?.request({
           url: `/api/v1/comments?lang=ru&fields=%2A`,
+          method: "POST",
           headers: {
-            "X-Token":
-              "c431a545fa0976a22822bc1c6d25137599b574b6693e579a6b1b5a066628fbc0",
+            "X-Token": token,
           },
+          body: JSON.stringify({
+            text: text,
+            parent: { _id: id, _type: type },
+          }),
         });
+        console.log(
+          "reeeees",
+          res.status,
+          typeof res.status,
+          res.status === 200
+        );
+        if (res.status !== 200) {
+          console.log(
+            "in console",
+            res.status,
+            typeof res.status,
+            res.status === 200
+          );
+          throw new Error("Send comment failed");
+        }
+
+        commentsAction.commentsLoad(articleId)(dispatch, getState, services);
       } catch (e) {
         console.log(e);
       }
@@ -45,10 +63,4 @@ export default {
   },
 };
 
-// 'http://example.front.ylab.io/api/v1/comments?lang=ru&fields=%2A' \
-// -H 'accept: application/json' \
-// -H 'X-Token: c431a545fa0976a22822bc1c6d25137599b574b6693e579a6b1b5a066628fbc0' \
-// -H 'Content-Type: application/json' \
-// -d {
-// "text": "Очень важный комментарий 5346754",
-// "parent": {"_id": "65817bed5c295a2ff2fcd180", "_type": "article"}
+export default commentsAction;

@@ -14,4 +14,5 @@
 .LoginPrompt-link-cancel {
   color: #666666;
   text-decoration: underline;
+  cursor: pointer;
 }

@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./style.css";
 
 function LoginPrompt({ cancel, setOpenCard, level }) {
+  const location = useLocation();
   return (
     <div className="LoginPrompt" style={{ paddingLeft: `${level * 30}px` }}>
-      <Link className="LoginPrompt-link" to="/login">
+      <Link className="LoginPrompt-link" to="/login" state={{ back: location }}>
         Войдите
       </Link>
       , чтобы иметь возможность комментировать.{" "}

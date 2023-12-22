@@ -16,7 +16,7 @@
   text-align: left;
 }
 .SendComment-field {
-  max-width: 914px;
+  max-width: 944px;
   height: 80px;
   padding: 5px;
 
@@ -41,4 +41,8 @@
 
 .SendComment-button-box > :not(:last-child) {
   margin-right: 10px;
+}
+
+button {
+  cursor: pointer;
 }

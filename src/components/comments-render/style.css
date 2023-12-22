@@ -11,6 +11,7 @@ p {
 }
 
 .CommentsRender-box {
+  max-width: 944px;
 }
 
 .CommentsRender-box > :not(:last-child) {
@@ -48,6 +49,8 @@ p {
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
+
+  word-wrap: break-word;
 }
 
 .CommentsRender-answer {

@@ -8,8 +8,16 @@ import treeToList from "../../utils/tree-to-list";
 import { useParams } from "react-router-dom";
 import listToTreeComment from "../../utils/sortComment";
 import formatDateTime from "../../utils/formatDataTime";
+import { render } from "react-dom";
 
-function CommentsRender({ openCard, setOpenCard, comments, children }) {
+function CommentsRender({
+  openCard,
+  setOpenCard,
+  comments,
+  renderComponent,
+  session,
+  children,
+}) {
   const [commentId, setCommentId] = useState();
   const id = useParams();
   const sortCommentsRef = useRef();
@@ -22,11 +30,7 @@ function CommentsRender({ openCard, setOpenCard, comments, children }) {
 
   useEffect(() => {
     if (comments) {
-      console.log("HOW MATCH", comments);
-      // console.log("SORTfUNC", sortCategory(comments, id));
-
       setComm([
-        // { value: "", text: "Все" },
         ...treeToList(listToTreeComment(comments, "_id", id), (item, level) => {
           console.log("article commetns treeToList item", item, item._id);
           return {
@@ -65,7 +69,10 @@ function CommentsRender({ openCard, setOpenCard, comments, children }) {
             </div>
             {openCard && item._id === commentId && (
               <div style={{ paddingLeft: `${item.level * 30}px` }}>
-                {children}
+                {/* {children} */}
+                {openCard && session
+                  ? renderComponent.sendComment(commentId)
+                  : renderComponent.loginPrompt()}
               </div>
             )}
           </div>
