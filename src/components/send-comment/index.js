@@ -13,7 +13,9 @@ function SendComment({ openCard, setOpenCard, sendComment, parentId }) {
 
   return (
     <div className="SendComment">
-      <div className="SendComment-title">Новый ответ</div>
+      <div className="SendComment-title">
+        {openCard ? "Новый ответ" : "Новый комментарий"}
+      </div>
       <textarea
         className="SendComment-field"
         value={textValue}

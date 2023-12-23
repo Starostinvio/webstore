@@ -4,7 +4,7 @@ const commentsAction = {
   commentsLoad: (id) => {
     return async (dispatch, getState, services) => {
       const token = localStorage.getItem("token");
-      console.log("ttooooooken", token);
+
       try {
         dispatch({ type: "comments/load-start" });
 
@@ -12,7 +12,6 @@ const commentsAction = {
           url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
         });
 
-        console.log("!11 after res CommentsLoad res", res);
         dispatch({
           type: "comments/load",
           payload: { comments: res.data.result },
@@ -39,19 +38,8 @@ const commentsAction = {
             parent: { _id: id, _type: type },
           }),
         });
-        console.log(
-          "reeeees",
-          res.status,
-          typeof res.status,
-          res.status === 200
-        );
+
         if (res.status !== 200) {
-          console.log(
-            "in console",
-            res.status,
-            typeof res.status,
-            res.status === 200
-          );
           throw new Error("Send comment failed");
         }
 

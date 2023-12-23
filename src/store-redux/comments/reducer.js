@@ -4,7 +4,6 @@ const initialState = {
 };
 
 function reducer(state = initialState, action) {
-  console.log("comments/reducer action", action.payload);
   switch (action.type) {
     case "comments/load-start":
       return { ...state, comments: {}, waiting: true };

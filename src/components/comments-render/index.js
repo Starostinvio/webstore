@@ -1,6 +1,7 @@
 import "./style.css";
 import { useSelector } from "react-redux";
 import { useState, useRef, useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
 
 import { sortCategory } from "../../utils/plural";
 import treeToList from "../../utils/tree-to-list";
@@ -16,12 +17,11 @@ function CommentsRender({
   comments,
   renderComponent,
   session,
-  children,
+  user,
 }) {
   const [commentId, setCommentId] = useState();
   const id = useParams();
-  const sortCommentsRef = useRef();
-  const [comm, setComm] = useState([]);
+  const [sortComment, setSortComment] = useState([]);
 
   const handlerOpenCard = (id) => {
     setOpenCard(true);
@@ -30,9 +30,8 @@ function CommentsRender({
 
   useEffect(() => {
     if (comments) {
-      setComm([
+      setSortComment([
         ...treeToList(listToTreeComment(comments, "_id", id), (item, level) => {
-          console.log("article commetns treeToList item", item, item._id);
           return {
             _id: item._id,
             text: item.text,
@@ -47,7 +46,7 @@ function CommentsRender({
 
   return (
     <>
-      {comm?.map((item) => {
+      {sortComment?.map((item) => {
         return (
           <div key={item._id} className="CommentsRender">
             <div
@@ -55,7 +54,14 @@ function CommentsRender({
               style={{ paddingLeft: `${item.level * 30}px` }}
             >
               <div className="CommentsRender-title">
-                <p className="CommentsRender-title title">{item.name}</p>
+                <p
+                  className="CommentsRender-title title"
+                  style={{
+                    color: item.name === user.profile?.name ? "#666666" : "",
+                  }}
+                >
+                  {item.name}
+                </p>
                 <p className="CommentsRender-title date">{item.dateCreate}</p>
               </div>
               <p className="CommentsRender-text">{item.text}</p>
@@ -69,7 +75,6 @@ function CommentsRender({
             </div>
             {openCard && item._id === commentId && (
               <div style={{ paddingLeft: `${item.level * 30}px` }}>
-                {/* {children} */}
                 {openCard && session
                   ? renderComponent.sendComment(commentId)
                   : renderComponent.loginPrompt()}
@@ -81,5 +86,14 @@ function CommentsRender({
     </>
   );
 }
+
+CommentsRender.propTypes = {
+  openCard: PropTypes.bool,
+  setOpenCard: PropTypes.func,
+  comments: PropTypes.array,
+  renderComponent: PropTypes.object,
+  session: PropTypes.bool,
+  user: PropTypes.object,
+};
 
 export default CommentsRender;

@@ -16,6 +16,7 @@ function ArticleComments() {
   const select = storeSelector((state) => ({
     exists: state.session.exists,
     token: state.session.token,
+    user: state.session.user,
   }));
   const params = useParams();
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ function ArticleComments() {
         setOpenCard={setOpenCard}
         comments={comments.comments.items}
         renderComponent={renders}
+        user={select.user}
       />
       {!openCard &&
         (select.exists ? (

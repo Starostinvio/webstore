@@ -1,10 +1,8 @@
 export default function listToTreeComment(list, key = "_id", id) {
-  console.log("list to tree запустился key", id);
   let trees = {};
   let roots = {};
 
   for (const item of list) {
-    console.log("list to -tree", item);
     // Добавление элемента в индекс узлов и создание свойства children
     if (!trees[item[key]]) {
       trees[item[key]] = item;
@@ -25,6 +23,6 @@ export default function listToTreeComment(list, key = "_id", id) {
       if (roots[item[key]]) delete roots[item[key]];
     }
   }
-  console.log("Результат LIST TO TREE", Object.values(roots));
+
   return Object.values(roots);
 }

@@ -27,3 +27,31 @@ curl -X 'GET' \
   "text": "Очень важный комментарий 5346754",
   "parent": {"_id": "65817bed5c295a2ff2fcd180", "_type": "article"}
 }
+
+-Это ответ:
+{
+  "result": {
+    "text": "Очень важный комментарий 5346754",
+    "parent": {
+      "_id": "65817bed5c295a2ff2fcd180",
+      "_type": "article",
+      "_tree": [
+        {
+          "_id": "65817bed5c295a2ff2fcd180",
+          "_type": "article"
+        }
+      ]
+    },
+    "_id": "658313be7b5ad10c73cfa04b",
+    "_type": "comment",
+    "dateCreate": "2023-12-20T16:18:06.630Z",
+    "dateUpdate": "2023-12-20T16:18:06.630Z",
+    "isDeleted": false,
+    "isNew": true,
+    "author": {
+      "_id": "65817be05c295a2ff2fcc582",
+      "_type": "user"
+    },
+    "order": 2928
+  }
+}

@@ -6,7 +6,6 @@ export default {
    */
   load: (id) => {
     return async (dispatch, getState, services) => {
-      console.log("actionsLoad services", services.api);
       // Сброс текущего товара и установка признака ожидания загрузки
       dispatch({ type: "article/load-start" });
 
@@ -15,7 +14,6 @@ export default {
           url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
         });
 
-        console.log("redux-store/article/actions/", res);
         // Товар загружен успешно
         dispatch({
           type: "article/load-success",
