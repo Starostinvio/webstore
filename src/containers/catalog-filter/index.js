@@ -42,7 +42,6 @@ function CatalogFilter() {
     ),
   };
 
-  console.log("!?!?!? select.categories", select.categories);
   const options = {
     // Варианты сортировок
     sort: useMemo(
@@ -69,19 +68,6 @@ function CatalogFilter() {
     ),
   };
 
-  useEffect(() => {
-    console.log("SORT NORM", [
-      { value: "", title: "Все" },
-      ...treeToList(listToTree(select.categories), (item, level) => {
-        return {
-          value: item._id,
-          title: "- ".repeat(level) + item.title,
-        };
-      }),
-    ]);
-  }, [select.categories]);
-
-  console.log("listToTree", listToTree(select.categories));
   const { t } = useTranslate();
 
   return (

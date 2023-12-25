@@ -24,7 +24,13 @@ class APIService {
 
     const res = await fetch(url, {
       method,
-      headers: { ...this.defaultHeaders, ...headers },
+      headers: {
+        ...this.defaultHeaders,
+        ...headers,
+        ...{
+          "X-Lang": this.services.I18n.lang,
+        },
+      },
       ...options,
     });
 

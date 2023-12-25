@@ -16,6 +16,12 @@ let config = {
   resolve: {
     extensions: [".js", ".jsx"], // расширения по умолчанию если не указаны в import
     modules: ["./", "node_modules"], // Где искать файлы подключаемых модулей (пакетов)
+    fallback: {
+      path: require.resolve("path-browserify"),
+      util: require.resolve("util/"),
+      zlib: require.resolve("browserify-zlib"),
+      crypto: require.resolve("crypto-browserify"),
+    },
   },
   module: {
     rules: [

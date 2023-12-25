@@ -9,6 +9,14 @@ function reducer(state = initialState, action) {
       return { ...state, comments: {}, waiting: true };
     case "comments/load":
       return { ...state, comments: action.payload.comments, waiting: false };
+    case "addComment":
+      return {
+        ...state,
+        comments: {
+          count: state.comments.count + 1,
+          items: [...state.comments.items, action.payload],
+        },
+      };
 
     default:
       return state;

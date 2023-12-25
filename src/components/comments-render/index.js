@@ -1,15 +1,10 @@
 import "./style.css";
-import { useSelector } from "react-redux";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
-import { sortCategory } from "../../utils/plural";
 import treeToList from "../../utils/tree-to-list";
-
 import { useParams } from "react-router-dom";
-import listToTreeComment from "../../utils/sortComment";
+import listToTree from "../../utils/list-to-tree";
 import formatDateTime from "../../utils/formatDataTime";
-import { render } from "react-dom";
 
 function CommentsRender({
   openCard,
@@ -20,8 +15,8 @@ function CommentsRender({
   user,
 }) {
   const [commentId, setCommentId] = useState();
-  const id = useParams();
   const [sortComment, setSortComment] = useState([]);
+  const id = useParams();
 
   const handlerOpenCard = (id) => {
     setOpenCard(true);
@@ -31,18 +26,43 @@ function CommentsRender({
   useEffect(() => {
     if (comments) {
       setSortComment([
-        ...treeToList(listToTreeComment(comments, "_id", id), (item, level) => {
+        ...treeToList(listToTree(comments, "_id", id), (item, level) => {
           return {
             _id: item._id,
             text: item.text,
             level: level,
             dateCreate: formatDateTime(item.dateCreate),
-            name: item.author.profile.name,
+            name: item.author.profile
+              ? item.author.profile.name
+              : user.profile.name,
           };
         }),
       ]);
     }
   }, [comments]);
+
+  function findLastChildId() {
+    if (sortComment.length > 0) {
+      const indexCommentId = sortComment.findIndex(
+        (item) => item._id === commentId._id
+      );
+
+      let newArray = [];
+      indexCommentId !== sortComment.length - 1
+        ? (newArray = sortComment.slice(indexCommentId + 1))
+        : newArray.push(commentId);
+
+      const nextSiblingIndex = newArray.findIndex(
+        (item) => item.level <= commentId.level
+      );
+      let lastChild;
+      nextSiblingIndex === 0
+        ? (lastChild = commentId)
+        : (lastChild = newArray[nextSiblingIndex - 1]);
+
+      return lastChild._id;
+    }
+  }
 
   return (
     <>
@@ -51,7 +71,9 @@ function CommentsRender({
           <div key={item._id} className="CommentsRender">
             <div
               className="CommentsRender-box"
-              style={{ paddingLeft: `${item.level * 30}px` }}
+              style={{
+                paddingLeft: `${item.level >= 6 ? 5 * 30 : item.level * 30}px`,
+              }}
             >
               <div className="CommentsRender-title">
                 <p
@@ -68,15 +90,22 @@ function CommentsRender({
 
               <div
                 className="CommentsRender-answer"
-                onClick={() => handlerOpenCard(item._id)}
+                onClick={() => handlerOpenCard(item)}
               >
                 Ответить
               </div>
             </div>
-            {openCard && item._id === commentId && (
-              <div style={{ paddingLeft: `${item.level * 30}px` }}>
+
+            {openCard && item._id === findLastChildId() && (
+              <div
+                style={{
+                  paddingLeft: `${
+                    commentId.level >= 5 ? 5 * 30 : (commentId.level + 1) * 30
+                  }px`,
+                }}
+              >
                 {openCard && session
-                  ? renderComponent.sendComment(commentId)
+                  ? renderComponent.sendComment(commentId._id)
                   : renderComponent.loginPrompt()}
               </div>
             )}

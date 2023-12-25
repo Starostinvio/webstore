@@ -1,11 +1,8 @@
 import CommentsRender from "../../components/comments-render";
 import { useSelector } from "react-redux";
 import storeSelector from "../../hooks/use-selector";
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import treeToList from "../../utils/tree-to-list";
-import listToTree from "../../utils/list-to-tree";
-import { sortCategory } from "../../utils/plural";
-import { Link, useParams } from "react-router-dom";
+import { useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import LoginPrompt from "../../components/login-prompt";
 import SendComment from "../../components/send-comment";
@@ -23,6 +20,7 @@ function ArticleComments() {
   const comments = useSelector((state) => ({
     comments: state.comments.comments,
   }));
+
   const [openCard, setOpenCard] = useState(false);
 
   const sendCommentWithArticleId = (comment, id) => {
@@ -33,6 +31,12 @@ function ArticleComments() {
     dispatch(commentsAction.sendComments(comment, id, "comment", params.id));
   };
 
+  const handleChildRef = (element) => {
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const renders = {
     sendComment: useCallback((parentId) => (
       <SendComment
@@ -40,10 +44,15 @@ function ArticleComments() {
         setOpenCard={setOpenCard}
         sendComment={sendCommentWithParentId}
         parentId={parentId}
+        onRef={handleChildRef}
       />
     )),
-    loginPrompt: useCallback(() => (
-      <LoginPrompt cancel="Отмена" setOpenCard={setOpenCard} />
+    loginPrompt: useCallback((ref) => (
+      <LoginPrompt
+        cancel="Отмена"
+        setOpenCard={setOpenCard}
+        onRef={handleChildRef}
+      />
     )),
   };
 

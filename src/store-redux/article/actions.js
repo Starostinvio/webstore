@@ -12,6 +12,9 @@ export default {
       try {
         const res = await services.api.request({
           url: `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
+          // headers: {
+          //   "X-Lang": "en",
+          // },
         });
 
         // Товар загружен успешно

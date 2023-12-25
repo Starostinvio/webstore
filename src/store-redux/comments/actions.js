@@ -1,5 +1,3 @@
-import useSelector from "../../hooks/use-selector";
-
 const commentsAction = {
   commentsLoad: (id) => {
     return async (dispatch, getState, services) => {
@@ -26,7 +24,6 @@ const commentsAction = {
       const token = localStorage.getItem("token");
 
       try {
-        dispatch({ type: "comments/load-start" });
         const res = await services.api?.request({
           url: `/api/v1/comments?lang=ru&fields=%2A`,
           method: "POST",
@@ -43,7 +40,10 @@ const commentsAction = {
           throw new Error("Send comment failed");
         }
 
-        commentsAction.commentsLoad(articleId)(dispatch, getState, services);
+        dispatch({
+          type: "addComment",
+          payload: res.data.result,
+        });
       } catch (e) {
         console.log(e);
       }
