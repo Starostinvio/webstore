@@ -6,5 +6,5 @@ import useServices from "./use-services";
  * Хук возвращает функцию для локализации текстов, код языка и функцию его смены
  */
 export default function useTranslate() {
-  return useServices().I18n;
+  return useServices()?.I18n;
 }
